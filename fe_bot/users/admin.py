@@ -12,13 +12,23 @@ class LogsAdmin(admin.ModelAdmin):
     list_filter = (('date_added', DateRangeFilter), )
 
 class UserNewAdmin(admin.ModelAdmin):
-    fields = (
+    fields = ('name',
     'username', 'first_name', 'last_name', 'referer_link', 'reg_date', 'total_searches', 'language_code', 'balance',
     'level', 'extraSearches', 'coment', 'user_logs',)
-    readonly_fields = ('username', 'first_name', 'last_name', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
+    readonly_fields = ('name', 'username', 'first_name', 'last_name', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
     list_display = ('reg_date', 'chat_id', 'total_searches_1', 'ref_code', '__str__')
     list_display_links = ('chat_id', 'ref_code')
     list_filter = (('reg_date', DateRangeFilter), 'level', 'ref_code',)
+
+    @admin.display
+    def name(self, obj):
+        return mark_safe(
+            '<b><a href="https://t.me/{username}">{username}</a></b><br /><br />'
+            '<b>{first_name} {last_name}</b>'.format(
+                username=obj.username,
+                first_name=obj.first_name,
+                last_name=obj.last_name,
+            ))
 
     @admin.display
     def total_searches(self, obj):
