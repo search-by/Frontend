@@ -24,7 +24,7 @@ class UserNewAdmin(admin.ModelAdmin):
     def name(self, obj):
         return mark_safe(
             '<b><a href="https://t.me/{username}">{username}</a></b><br /><br />'
-            '<b>{first_name} {last_name}</b>'.format(
+            '<b>{first_name}<br />{last_name}</b>'.format(
                 username=obj.username,
                 first_name=obj.first_name,
                 last_name=obj.last_name,
