@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from .models import Logs, User_new
-from django.db.models import Q
 from rangefilter.filters import DateRangeFilter
 import os
 
@@ -35,23 +34,11 @@ class UserNewAdmin(admin.ModelAdmin):
     @admin.display
     def total_searches(self, obj):
         total_searches_count = obj.task_set.count()
-        finished_count = obj.task_set.filter(pimeyes_status='9').count()
-        unfinished_count = obj.task_set.filter(~Q(pimeyes_status='9') and ~Q(pimeyes_status='0')).count()
-        errors = obj.task_set.filter(pimeyes_status__icontains='0').count()
-        return mark_safe('<a href="/{link}={chat_id}">Всего поисков: {total_searches_count} </a><br /><br />'
-                         '<a href="/{link_finished}={chat_id}">Завершенных: {finished_count} </a><br /><br />'
-                         '<a href="/{link_unfinished}={chat_id}"> Незавершенных без ошибок: {unfinished_count}</a><br /><br />'
-                         '<a href="/{errorlink}=0"> Поисков с ошибками: {errors}</a>'.format(
+        return mark_safe('<a href="/{link}={chat_id}">Всего поисков: {total_searches_count} </a>'.format(
             bot_url=SERVER_ADRESS,
             link='admin/tasks/task/?user_id__chat_id__exact',
-            link_unfinished='admin/tasks/task/?pimeyes_status__gt=1&pimeyes_status__lt=9&user_id__chat_id__exact',
-            link_finished='admin/tasks/task/?pimeyes_status=9&user_id__chat_id__exact',
             chat_id=obj.chat_id,
-            finished_count=finished_count,
             total_searches_count=total_searches_count,
-            unfinished_count=unfinished_count,
-            errorlink='admin/tasks/task/?q',
-            errors=errors
         ))
 
     @admin.display

@@ -1,24 +1,18 @@
 from pathlib import Path
 import os
-from django.core.management.utils import get_random_secret_key
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")# == "127.0.0.1"
-SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')# ==
-TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")# == "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
-#'1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM'
-DEBUG = os.getenv("DEBUG", "True")# == "True"
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
+TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+DEBUG = os.getenv("DEBUG", "True")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-
-DB_HOST = os.getenv("DB_HOST", "db-1-do-user-11581829-0.b.db.ondigitalocean.com") #== "True"
-DB_NAME = os.getenv("DB_NAME", "TEST_FE_1") #== "True"
-DB_USER = os.getenv("DB_USER", "TEST_FE_ADMIN")# == "True"
-DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_u-hAhyKg7a6Si4Pbi8Z") #== "True"
-
-
-#ALLOWED_HOSTS = ['*']
+DB_HOST = os.getenv("DB_HOST", "db-1-do-user-11581829-0.b.db.ondigitalocean.com")
+DB_NAME = os.getenv("DB_NAME", "TEST_FE_1")
+DB_USER = os.getenv("DB_USER", "TEST_FE_ADMIN")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_u-hAhyKg7a6Si4Pbi8Z")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,20 +64,12 @@ WSGI_APPLICATION = 'fe_bot.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,#'TEST_FE_1',
-        'USER': DB_USER,#'TEST_FE_ADMIN',
-        'PASSWORD': DB_PASSWORD, #'AVNS_u-hAhyKg7a6Si4Pbi8Z',
-        'HOST': DB_HOST,#'db-1-do-user-11581829-0.b.db.ondigitalocean.com',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
         'PORT': 25060,
     },
-    #'prod': {
-    #    'ENGINE': 'django.db.backends.postgresql',
-    #    'NAME': 'defaultdb',
-    #    'USER': 'doadmin',
-    #    'PASSWORD': 'AVNS_0r_wo19DtRMwwCjS0KK',
-    #    'HOST': 'db-1-do-user-11581829-0.b.db.ondigitalocean.com',
-    #    'PORT': 25060,
-    #}
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,8 +103,6 @@ DJANGO_TELEGRAMBOT = {
     'MODE' : 'WEBHOOK',
     'WEBHOOK_SITE' : f'https://{SERVER_ADRESS}',
     'WEBHOOK_PREFIX' : '/prefix',
-    #WEBHOOK_CERTIFICATE' : '/etc/ssl/certs/nginx-selfsigned.crt',
-    #'STRICT_INIT': True,
     'BOTS' : [
         {
             'TOKEN': TOKEN,

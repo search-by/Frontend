@@ -1,11 +1,13 @@
 import requests
-from django.contrib import admin
 from .models import Task
 from django.utils.html import mark_safe
-from fe_bot.settings import TOKEN, SERVER_ADRESS
-from django.contrib.admin import DateFieldListFilter
 from django.contrib import admin
-from rangefilter.filters import DateRangeFilter, DateTimeRangeFilter
+from rangefilter.filters import DateRangeFilter
+import os
+
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
+TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+
 
 class TaskAdmin(admin.ModelAdmin):
     fields = ('user', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',  'file', 'logs',)
