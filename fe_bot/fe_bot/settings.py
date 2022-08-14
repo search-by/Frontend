@@ -32,9 +32,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'users',
     'tasks',
-    #'plategki',
     'partner_program',
-    #'raports',
     "corsheaders",
     'rangefilter',
 ]
