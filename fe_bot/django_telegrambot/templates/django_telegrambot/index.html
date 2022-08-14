@@ -1,0 +1,42 @@
+{% extends "admin/index.html" %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>
+    #django-telegrambot ul li {
+        list-style-type: none;
+    }
+    ul.nolist{
+        margin-left: 10px;
+        padding-left: 0;
+    }
+    .dodgerblue{
+        color: dodgerblue;
+    }
+    .botlist{
+        font-size: 1.5em;
+    }
+    #django-telegrambot li {font-size: 1.1em;}
+</style>
+{% endblock %}
+{% block extrahead %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.1/clipboard.min.js"></script>
+
+<script src="https://use.fontawesome.com/c8dc42a356.js"></script>
+<script>
+    $( document ).ready(function() {
+
+        var clipboard = new Clipboard('.btn');
+        clipboard.on('success', function(e) {
+            e.clearSelection();
+        });
+
+        clipboard.on('error', function(e) {
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
+    });
+</script>
+{% endblock %}

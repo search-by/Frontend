@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig connectionConfig="{&quot;proxyParams&quot;:{&quot;proxyHost&quot;:&quot;193.201.127.129&quot;,&quot;proxyPort&quot;:60461,&quot;proxyType&quot;:&quot;HTTP&quot;,&quot;authData&quot;:{&quot;proxyAuthType&quot;:&quot;USER_AND_PASSWORD&quot;}}}" host="167.99.209.157" id="7a3f2408-ff20-4269-9a12-00f35f339e6d" keyPath="D:\PROD\main_1.ppk" port="22" customName="PROD_FE" nameFormat="CUSTOM" username="root" useOpenSSHConfig="true">
+        <option name="customName" value="PROD_FE" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>
