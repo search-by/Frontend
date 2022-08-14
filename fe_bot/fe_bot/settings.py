@@ -4,10 +4,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-SERVER_ADRESS = 'sbfbbeadmin.com'
+#SERVER_ADRESS = 'sbfbbeadmin.com'
+SERVER_ADRESS = 'lobster-app-2jzea.ondigitalocean.app'
 SECRET_KEY = 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0'
 TOKEN = '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
