@@ -13,9 +13,12 @@ class LogsAdmin(admin.ModelAdmin):
 
 class UserNewAdmin(admin.ModelAdmin):
     fields = ('name',
-    'username', 'first_name', 'last_name', 'referer_link', 'reg_date', 'total_searches', 'language_code', 'balance',
-    'level', 'extraSearches', 'coment', 'user_logs',)
-    readonly_fields = ('name', 'username', 'first_name', 'last_name', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
+    #'username', 'first_name', 'last_name',
+              'referer_link', 'language_code', 'total_searches',
+    'level',  'user_logs', 'reg_date', 'balance', 'extraSearches', 'coment', )
+    readonly_fields = ('name',
+                       #'username', 'first_name', 'last_name',
+                       'referer_link', 'reg_date', 'total_searches', 'user_logs')
     list_display = ('reg_date', 'chat_id', 'total_searches_1', 'ref_code', '__str__')
     list_display_links = ('chat_id', 'ref_code')
     list_filter = (('reg_date', DateRangeFilter), 'level', 'ref_code',)
