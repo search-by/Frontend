@@ -7,12 +7,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
 TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
-DEBUG = os.getenv("DEBUG", "True")
+DEBUG = os.getenv("DEBUG", "False")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST", "db-1-do-user-11581829-0.b.db.ondigitalocean.com")
 DB_NAME = os.getenv("DB_NAME", "TEST_FE_1")
 DB_USER = os.getenv("DB_USER", "TEST_FE_ADMIN")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_u-hAhyKg7a6Si4Pbi8Z")
+
+print(f"{SERVER_ADRESS} {SECRET_KEY} {TOKEN} {DEBUG} {ALLOWED_HOSTS} {DB_HOST} {DB_NAME} {DB_USER} {DB_PASSWORD}")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
