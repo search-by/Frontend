@@ -1,15 +1,17 @@
 from django.contrib import admin
 from django.utils.html import mark_safe
 from .models import Logs, User_new
-from fe_bot.settings import SERVER_ADRESS
 from django.db.models import Q
 from rangefilter.filters import DateRangeFilter
+import os
 
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
 
 class LogsAdmin(admin.ModelAdmin):
     search_fields = ('chat_id',)
     list_display = ('date_added', 'chat_id', 'text',)
     list_filter = (('date_added', DateRangeFilter), )
+
 
 class UserNewAdmin(admin.ModelAdmin):
     fields = ('name', 'referer_link', 'language_code', 'total_searches',
@@ -71,7 +73,8 @@ class UserNewAdmin(admin.ModelAdmin):
         log_text = " "
         for item in logs:
             log_text += item.text + '<br />'
-        return mark_safe('<a href="/admin/users/logs/?q={chat_id}">Все логи</a><br /><br /><b>Последние 50 действий:</b> <br /><br />{log_text}'.format(
+        return mark_safe('<a href="/admin/users/logs/?q={chat_id}">Все логи</a><br /><br />'
+                         '<b>Последние 50 действий:</b> <br /><br />{log_text}'.format(
             log_text=log_text,
             chat_id=obj.chat_id,
         ))
