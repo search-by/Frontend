@@ -7,7 +7,9 @@ from partner_program.models import BonusCode
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from datetime import datetime
-TOKEN = '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM'
+import os
+
+TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
 
 
 class UserValidator:

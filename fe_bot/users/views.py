@@ -27,7 +27,6 @@ class PimeyesView(APIView):
         serializer = UserSearchesSerializerPimeyes(instance=us[0], data=data, partial=True)
         if serializer.is_valid(raise_exception=True):
             saved = serializer.save()
-            #send_result_pdf(us[0].UUID, us[0].chat_id, data['date'], data['pimeyes_total_result_count'], data['top_result_count'], data['pimeyes_pec_result_count'])
         else:
             print("Invalid")
         return Response({"success": True}, status=200)

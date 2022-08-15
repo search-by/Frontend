@@ -14,8 +14,6 @@ DB_NAME = os.getenv("DB_NAME", "TEST_FE_1")
 DB_USER = os.getenv("DB_USER", "TEST_FE_ADMIN")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_u-hAhyKg7a6Si4Pbi8Z")
 
-print(f"{SERVER_ADRESS} {SECRET_KEY} {TOKEN} {DEBUG} {ALLOWED_HOSTS} {DB_HOST} {DB_NAME} {DB_USER} {DB_PASSWORD}")
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

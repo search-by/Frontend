@@ -10,19 +10,14 @@ import emoji
 from bot.models import BotTexts, BotSettings
 from telegram import KeyboardButton
 
-try:
-    PARSE_MODE = os.environ['PARSE_MODE']
-    TOKEN = os.environ['TOKEN']
-    LOCALE = os.environ['LOCALE']
-    BOT_NAME = os.environ['BOT_NAME']
-    LOCATION = os.environ['LOCATION']
-except Exception:
-    TOKEN = '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM'
-    PARSE_MODE = 'MarkdownV2'
-    LOCALE = 'ua'
-    LOCATION = '/home/beadmin/files'
-    BOT_NAME = 'fandydev2341bot'
-    TOKEN_RAPORT = '1979319236:AAH33slvXbRE94Aj1G8CAd0m35Ao7Dtq2XE'
+
+TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
+LOCALE = os.getenv("LOCALE", "ua")
+LOCATION = os.getenv("LOCATION", "/home/beadmin/files")
+BOT_NAME = os.getenv("BOT_NAME", "fandydev2341bot")
+TOKEN_RAPORT = os.getenv("TOKEN_RAPORT", "1979319236:AAH33slvXbRE94Aj1G8CAd0m35Ao7Dtq2XE")
+
 
 FIRST, SECONT, THIRD, FOURTH, PROPOSAL1, PROPOSAL2, PLATEGKA1, PLATEGKA2, LIQPAY = range(9)
 
