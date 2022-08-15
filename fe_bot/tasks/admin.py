@@ -12,9 +12,9 @@ TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
 class TaskAdmin(admin.ModelAdmin):
     fields = ('user', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',  'file', 'logs',)
     readonly_fields = ('user', 'last_update', 'pimeyes_status', 'type', 'result', 'creation_date', 'file', 'logs', 'user_lvl')
-    list_display = ('last_update', 'user_id', 'pimeyes_status', 'status', 'result', )
+    list_display = ('last_update', 'user_id', 'pimeyes_status', 'status', 'result', 'user_lvl', )
     list_display_links = ('user_id', 'last_update', )
-    list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl')
+    list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl', )
 
     @admin.display
     def user_id(self, obj):
