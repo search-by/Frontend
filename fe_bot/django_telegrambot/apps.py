@@ -45,13 +45,11 @@ class DjangoTelegramBot(AppConfig):
 
     @classproperty
     def dispatcher(cls):
-        #print("Getting value default dispatcher")
         cls.__used_tokens.add(cls.bot_tokens[0])
         return cls.dispatchers[0]
 
     @classproperty
     def updater(cls):
-        #print("Getting value default updater")
         cls.__used_tokens.add(cls.bot_tokens[0])
         return cls.updaters[0]
 
@@ -73,11 +71,9 @@ class DjangoTelegramBot(AppConfig):
             cls.__used_tokens.add(cls.bot_tokens[index])
             return cls.dispatchers[index]
 
-
     @classmethod
     def getDispatcher(cls, bot_id=None, safe=True):
         return cls.get_dispatcher(bot_id, safe)
-
 
     @classmethod
     def get_bot(cls, bot_id=None, safe=True):
@@ -98,11 +94,9 @@ class DjangoTelegramBot(AppConfig):
                     return None
             return cls.bots[index]
 
-
     @classmethod
     def getBot(cls, bot_id=None, safe=True):
         return cls.get_bot(bot_id, safe)
-
 
     @classmethod
     def get_updater(cls, bot_id=None, safe=True):
@@ -120,13 +114,10 @@ class DjangoTelegramBot(AppConfig):
                     return None
             return cls.updaters[index]
 
-
     @classmethod
     def getUpdater(cls, id=None, safe=True):
         return cls.get_updater(id, safe)
 
-
-#
     def ready(self):
         if DjangoTelegramBot.ready_run:
             return
@@ -136,7 +127,7 @@ class DjangoTelegramBot(AppConfig):
         if settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK') == 'POLLING':
             self.mode = POLLING_MODE
 
-        modes = ['WEBHOOK','POLLING']
+        modes = ['WEBHOOK', 'POLLING']
         logger.info('Django Telegram Bot <{} mode>'.format(modes[self.mode]))
 
         bots_list = settings.DJANGO_TELEGRAMBOT.get('BOTS', [])
