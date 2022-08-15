@@ -40,7 +40,8 @@ class UserValidator:
             return True
 
     def is_promo_limit(self):
-        self.user.all_searches = self.user.task_set.all().annotate(c=Count('id'))
+        self.user.all_searches = self.user.task_set.all().filter(user_lvl=self.user.level.name).annotate(c=Count('id'))
+        print(f"self.user.all_searches: {self.user.all_searches}")
         if self.user.level.searches_max > 0:
             if len(self.user.all_searches) > self.user.level.searches_max:
                 return True
