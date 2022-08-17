@@ -45,8 +45,9 @@ class userlevels(models.Model):
                                             "Бота нужно добавить в администраторы канала.")
     coment = models.TextField(blank=True, null=True,
                               help_text="Поле для заметок. На работу не влияет.")
+
     def __str__(self):
-        return f'{self.name} '
+        return f'{self.name}'
 
     class Meta:
         verbose_name_plural = 'Уровни'

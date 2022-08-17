@@ -15,12 +15,8 @@ FIRST, SECOND = range(2)
 def check_ban_and_maitenence(user: User_new):
     if user.is_user_baned():
         return "BAN"
-        #pass
-        #Message("BAN", update=update, context=context).message_by_status()
     elif user.is_maitenence():
         return "STATUS_MAITENANCE"
-        #pass
-        #Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
     else:
         return False
 
@@ -30,11 +26,6 @@ def start(update: Update, context: CallbackContext) -> None:
     is_allowed = check_ban_and_maitenence(u)
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
-
-    #if u.is_user_baned():
-    #    Message("BAN", update=update, context=context).message_by_status()
-    #elif u.is_maitenence():
-    #    Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
     else:
         Message("/start", update=update, context=context, log=update.message.text).message_by_status()
     return FIRST
@@ -75,16 +66,16 @@ def profile(update: Update, context: CallbackContext) -> None:
     is_allowed = check_ban_and_maitenence(u)
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
-        #return FIRST
     else:
         Message('MENU_TEXT_PROFILE', update, log=update.message.text).profile(update, context)
     return FIRST
 
 
 def inline(update: Update, context: CallbackContext) -> None:
-    user_var = User_new(update, context)
-    if user_var.is_user_baned(update, context):
-        Message('BAN', update).message_by_status()
+    u = UserValidator(update, context)
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
         return FIRST
     quer = update.callback_query
     if quer.data == "INLINE_TEXT_SUPPORT":
@@ -98,7 +89,6 @@ def info(update: Update, context: CallbackContext) -> None:
     is_allowed = check_ban_and_maitenence(u)
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
-        #return FIRST
     else:
         Message('TEXTS_BOTINFO', update, log='_').profile(update, context)
     return FIRST
