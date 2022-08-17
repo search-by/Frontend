@@ -12,12 +12,29 @@ from bot.handlers.usercheck import UserValidator
 FIRST, SECOND = range(2)
 
 
+def check_ban_and_maitenence(user: User_new):
+    if user.is_user_baned():
+        return "BAN"
+        #pass
+        #Message("BAN", update=update, context=context).message_by_status()
+    elif user.is_maitenence():
+        return "STATUS_MAITENANCE"
+        #pass
+        #Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    else:
+        return False
+
+
 def start(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
-    if u.is_user_baned():
-        Message("BAN", update=update, context=context).message_by_status()
-    elif u.is_maitenence():
-        Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+
+    #if u.is_user_baned():
+    #    Message("BAN", update=update, context=context).message_by_status()
+    #elif u.is_maitenence():
+    #    Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
     else:
         Message("/start", update=update, context=context, log=update.message.text).message_by_status()
     return FIRST
@@ -25,10 +42,9 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def anytext(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
-    if u.is_user_baned():
-        Message("BAN", update=update, context=context).message_by_status()
-    elif u.is_maitenence():
-        Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
     else:
         Message("ANYTEXT", update=update, context=context, log=update.message.text).message_by_status()
     return FIRST
@@ -36,10 +52,10 @@ def anytext(update: Update, context: CallbackContext) -> None:
 
 def foto_upload(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
-    if u.is_user_baned():
-        Message("BAN", update=update, context=context).message_by_status()
-    elif u.is_maitenence():
-        Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+        return FIRST
     elif u.is_promo_limit():
         Message("PROMO_LIMIT", update=update, context=context, log='_').message_by_status()
     elif u.is_day_limit():
@@ -56,10 +72,10 @@ def foto_upload(update: Update, context: CallbackContext) -> None:
 
 def profile(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
-    if u.is_user_baned():
-        Message("BAN", update=update, context=context).message_by_status()
-    elif u.is_maitenence():
-        Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+        #return FIRST
     else:
         Message('MENU_TEXT_PROFILE', update, log=update.message.text).profile(update, context)
     return FIRST
@@ -79,10 +95,10 @@ def inline(update: Update, context: CallbackContext) -> None:
 
 def info(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
-    if u.is_user_baned():
-        Message("BAN", update=update, context=context).message_by_status()
-    elif u.is_maitenence():
-        Message("STATUS_MAITENANCE", update=update, context=context).message_by_status()
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+        #return FIRST
     else:
         Message('TEXTS_BOTINFO', update, log='_').profile(update, context)
     return FIRST
