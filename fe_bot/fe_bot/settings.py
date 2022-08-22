@@ -100,10 +100,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJANGO_TELEGRAMBOT = {
-    'MODE' : 'WEBHOOK',
-    'WEBHOOK_SITE' : f'https://{SERVER_ADRESS}',
-    'WEBHOOK_PREFIX' : '/prefix',
-    'BOTS' : [
+    'MODE': 'WEBHOOK',
+    'WEBHOOK_SITE': f'https://{SERVER_ADRESS}',
+    'WEBHOOK_PREFIX': '/prefix',
+    'BOTS': [
         {
             'TOKEN': TOKEN,
         },
