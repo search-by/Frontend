@@ -6,7 +6,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", '1a62-45-130-2-37.ngrok.io')
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
-TOKEN = os.getenv("TOKEN", '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo')
+TOKEN = os.getenv("TOKEN"
+                  #, '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo'
+                  )
 DEBUG = os.getenv("DEBUG", "False")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST")
