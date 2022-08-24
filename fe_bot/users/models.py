@@ -138,13 +138,6 @@ class User_new(CreateUpdateTracker):
             pass
     '''
 
-    #@classmethod
-    #def get_user_searches_left(cls, u: User_new):
-    #    currentDay = datetime.datetime.now().day
-    #    searches_today = u.task_set.all().annotate(c=Count('id')) #u.all_searches.filter(creation_date__day=currentDay).annotate(c=Count('id')).count()
-    #    searches_left_today = u.level.free_day - searches_today
-    #    return searches_left_today
-
     @classmethod
     def is_user_created(cls, update: Update, context) -> Tuple[User_new, bool]:
         data = extract_user_data_from_update(update)
@@ -181,21 +174,11 @@ class User_new(CreateUpdateTracker):
         search_type = cls.get_search_type(u)
         total_refs = cls.objects.all().filter(ref_code=u.chat_id)
         return {"user": u,
-                'status' : ban_and_m_result,
+                'status': ban_and_m_result,
                 "is_allowed": ban_and_m_result[0],
                 "allowed_status": ban_and_m_result[1],
                 "search_type": search_type,
                 "total_refs": len(total_refs)}
-    '''
-        @classmethod
-    def get_context(cls, update: Update, context):
-        data = extract_user_data_from_update(update)
-        if context is not None and context.args is not None and len(context.args) > 0:
-            payload = context.args[0]
-            return payload
-    
-    
-    '''
 
     @classmethod
     def get_search_type(cls, u: User_new):
@@ -210,7 +193,6 @@ class User_new(CreateUpdateTracker):
         else:
             return False
 
-
     @classmethod
     def check_ban_and_maitenance(cls, u: User_new):
         settings = BotSettings.objects.get(id=1)
@@ -222,7 +204,6 @@ class User_new(CreateUpdateTracker):
         if username.isdigit():
             return cls.objects.filter(chat_id=int(username)).first()
         return cls.objects.filter(username__iexact=username).first()
-
 
     @classmethod
     def change_user_level(cls, u: User_new, level=None, new=False) -> Optional[User_new]:
@@ -241,6 +222,16 @@ class User_new(CreateUpdateTracker):
             u.save()
         return u
 
+    #@classmethod
+    def is_user_have_extra_searches(self):
+        #u, _ = cls.get_user_and_created(update, context)
+        extraSearches = int(self.extraSearches)
+        if extraSearches > 0:
+            self.extraSearches -= 1
+            self.save()
+            return True
+        else:
+            return False
     '''
     def pay(self, amount):
         try:
@@ -370,9 +361,6 @@ class Logs(models.Model):
     chat_id = models.BigIntegerField(default=0)
     user_name = models.CharField(max_length=150, default="-")
     text = models.CharField(max_length=250, default="-")
-    additional1 = models.CharField(max_length=250)
-    additional2 = models.CharField(max_length=250)
-    additional3 = models.CharField(max_length=250)
 
     class Meta:
         verbose_name_plural = 'История'
