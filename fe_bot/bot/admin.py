@@ -22,9 +22,9 @@ class TextsAdmin(admin.ModelAdmin):
 
 
 class LevelAdmin(admin.ModelAdmin):
-    fields = ('name', 'searches_max',  'free_day', 'pimeyes_results_count', "findclone_results_count",
+    fields = ('name',  'free_day', 'pimeyes_results_count', "findclone_results_count",
               "show_ads", "send_full_results", "group_requierd", "group_name", "coment",)
-    list_display = ('name', "show_ads", "send_full_results", "group_requierd", 'searches_max',
+    list_display = ('name', "show_ads", "send_full_results", "group_requierd",
                     'free_day', 'pimeyes_results_count', "findclone_results_count",)
     list_display_links = ('name', )
 
