@@ -28,9 +28,9 @@ class BotTexts(models.Model):
 
 class userlevels(models.Model):
     name = models.CharField(max_length=20, default="NEW", help_text="Название уровня(Отображается пользователю)")
-    searches_max = models.PositiveIntegerField(default=0, help_text="Макс. лимит поисков на этом уровне")
+    #searches_max = models.PositiveIntegerField(default=0, help_text="Макс. лимит поисков на этом уровне")
     free_day = models.PositiveSmallIntegerField(default=0, help_text="Макс. поисков можно использовать в день")
-    additional_search_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, help_text="Цена доп. поиска")
+    #additional_search_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, help_text="Цена доп. поиска")
     pimeyes_results_count = models.PositiveSmallIntegerField(default=0,
                                                              help_text="Сколько присылать результатов PY. 0 Чтобы отключить")
     findclone_results_count = models.PositiveSmallIntegerField(default=0,
