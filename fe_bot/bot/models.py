@@ -30,7 +30,7 @@ class userlevels(models.Model):
     name = models.CharField(max_length=20, default="NEW", help_text="Название уровня(Отображается пользователю)")
     #searches_max = models.PositiveIntegerField(default=0, help_text="Макс. лимит поисков на этом уровне")
     free_day = models.PositiveSmallIntegerField(default=0, help_text="Макс. поисков можно использовать в день")
-    additional_search_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, help_text="Цена доп. поиска")
+    #additional_search_price = models.DecimalField(max_digits=9, decimal_places=2, default=0, help_text="Цена доп. поиска")
     pimeyes_results_count = models.PositiveSmallIntegerField(default=0,
                                                              help_text="Сколько присылать результатов PY. 0 Чтобы отключить")
     findclone_results_count = models.PositiveSmallIntegerField(default=0,
@@ -40,7 +40,7 @@ class userlevels(models.Model):
     group_requierd = models.BooleanField(default=False,
                                          help_text="Запрашивать членство в группе перед загрузкой фото. ВАЖНО!!! "
                                                    "Бота нужно добавить в администраторы канала.")
-    group_name = models.CharField(default='@durov1', max_length=50,
+    group_name = models.CharField(default='@search_by_face_channel', max_length=50,
                                   help_text="Имя канала на который нужно подписатсья. Формат: @durov_1123_durov. ВАЖНО!!! "
                                             "Бота нужно добавить в администраторы канала.")
     coment = models.TextField(blank=True, null=True,

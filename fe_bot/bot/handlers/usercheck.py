@@ -9,7 +9,8 @@ from django.db.models import Count
 from datetime import datetime
 import os
 
-TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+TOKEN = os.getenv("TOKEN"#, "5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo"
+                  )
 
 
 class UserValidator:
@@ -39,22 +40,17 @@ class UserValidator:
         if maitenance:
             return True
 
-    def is_promo_limit(self):
-        self.user.all_searches = self.user.task_set.all().filter().annotate(c=Count('id'))
-        print(f"self.user.all_searches no filters: {self.user.all_searches.count()}")
-        self.user.all_searches = self.user.task_set.all().filter(user_lvl=self.user.level.name).annotate(c=Count('id'))
-        print(f"self.user.all_searches: {self.user.all_searches.count()}")
-        if self.user.level.searches_max > 0:
-            if self.user.all_searches.count() > self.user.level.searches_max:
-                return True
+    def is_user_have_extra_searches(self):
+        if self.user.is_user_have_extra_searches():
+            return False
+        else:
+            return True
 
     def is_day_limit(self):
+        self.user.all_searches = self.user.task_set.all().filter().annotate(c=Count('id'))
         currentDay = datetime.now().day
-        print(f"currentDay: {currentDay}")
         self.searches_today = self.user.all_searches.filter(creation_date__day=currentDay).annotate(c=Count('id'))
-        print(f"self.searches_today: {self.searches_today.count()}")
         self.searches_left_today = self.user.level.free_day - self.searches_today.count()
-        print(f"self.searches_left_today: {self.searches_left_today}")
         if self.searches_left_today <= 0:
             return True
 

@@ -11,11 +11,13 @@ from bot.models import BotTexts, BotSettings
 from telegram import KeyboardButton
 
 
-TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+TOKEN = os.getenv("TOKEN"#, "5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo"
+                  )
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 LOCALE = os.getenv("LOCALE", "ua")
 LOCATION = os.getenv("LOCATION", "/home/beadmin/files")
-BOT_NAME = os.getenv("BOT_NAME", "fandydev2341bot")
+BOT_NAME = os.getenv("BOT_NAME"#, "fandydev2341bot"
+                     )
 TOKEN_RAPORT = os.getenv("TOKEN_RAPORT", "1979319236:AAH33slvXbRE94Aj1G8CAd0m35Ao7Dtq2XE")
 
 
@@ -57,15 +59,22 @@ class Message:
 
     def insert_vars(self, text, light=False):
         BOT_NAME = self.BOT_NAME.replace("_", "\_")
-
+        from datetime import datetime
+        from django.db.models import Count
+        self.user.all_searches = self.user.task_set.all().filter().annotate(c=Count('id'))
+        currentDay = datetime.now().day
+        self.searches_today = self.user.all_searches.filter(creation_date__day=currentDay).annotate(c=Count('id'))
+        self.searches_left_today = self.user.level.free_day - self.searches_today.count()
+        if self.searches_left_today <= 0:
+            self.searches_left_today = '0'
         new_text = text.format(chat_id=self.chat_id,
                          level=self.user.level,
                          group=self.user.level.group_name,
                          ref_link="1",#f"https://t.me/{BOT_NAME}?start={self.user.chat_id}",
                          #ref_count=self.user["total_refs"],
-                         balance=str(self.user.balance),
-                         searches_left_today="1",#self.user.get_user_searches_left(self.user),
-                         extra_searches="1",#self.user.extraSearches,
+                         balance='0',#str(self.user.balance),
+                         searches_left_today=str(self.searches_left_today),
+                         extra_searches=self.user.extraSearches,
                          new_line='\n',
                          #time_till_new_search=self.var,
                          #group=self.group,

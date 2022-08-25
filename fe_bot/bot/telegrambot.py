@@ -49,11 +49,13 @@ def foto_upload(update: Update, context: CallbackContext) -> None:
         return FIRST
     elif u.is_day_limit():
         if u.is_user_have_extra_searches():
-            upload.upload(update, context)
-            Message("PROMO_LIMIT", update=update, context=context, log='_').message_by_status()
+            Message("SEARCH_DAY_LIMIT", update=update, context=context, log='_').message_by_status()
             return FIRST
         else:
-            Message("SEARCH_DAY_LIMIT", update=update, context=context, log='_').message_by_status()
+            upload.upload(update, context)
+            Message("PROMO_LIMIT", update=update, context=context, log='_').message_by_status()
+            Message("SEARCH_STATUS_pim_1", update=update, context=context, log='_').message_by_status()
+            return FIRST
     elif u.is_need_to_join_group():
         Message("MESSAGE_TEXT_PODPISKA", update=update, context=context, log='_').message_by_status()
     else:

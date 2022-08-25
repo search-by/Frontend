@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 SERVER_ADRESS = os.getenv("SERVER_ADRESS"
-                          #, '1a62-45-130-2-37.ngrok.io'
+                         # , 'bf27-45-130-2-37.ngrok.io'
                           )
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
 TOKEN = os.getenv("TOKEN"
@@ -64,7 +64,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fe_bot.wsgi.application'
-
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -74,6 +81,7 @@ DATABASES = {
         'HOST': DB_HOST,
         'PORT': 25060,
     },
+
 }
 
 AUTH_PASSWORD_VALIDATORS = [

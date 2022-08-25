@@ -222,9 +222,7 @@ class User_new(CreateUpdateTracker):
             u.save()
         return u
 
-    #@classmethod
     def is_user_have_extra_searches(self):
-        #u, _ = cls.get_user_and_created(update, context)
         extraSearches = int(self.extraSearches)
         if extraSearches > 0:
             self.extraSearches -= 1
@@ -247,17 +245,6 @@ class User_new(CreateUpdateTracker):
         self.save()
         message = f'{abs(d)}$ снято с баланса'
         return True
-
-    
-    @classmethod
-    def change_free_searches(cls, u: User_new, count, source=None):
-        extraSearches = int(u.extraSearches)
-        if (extraSearches) > 0:
-            u.extraSearches += count
-            u.save()
-            return True
-        else:
-            return False
     '''
     #@classmethod
     def get_search_type(self):
