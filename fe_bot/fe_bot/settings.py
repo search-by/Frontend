@@ -9,14 +9,14 @@ SERVER_ADRESS = os.getenv("SERVER_ADRESS"
                           )
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
 TOKEN = os.getenv("TOKEN"
-                  #, '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo'
+                  , '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo'
                   )
 DEBUG = os.getenv("DEBUG", "False")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-DB_HOST = os.getenv("DB_HOST")
-DB_NAME = os.getenv("DB_NAME")
-DB_USER = os.getenv("DB_USER", "TEST_FE_ADMIN")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST", "stage-db-26-08-22-backup-do-user-11581829-0.b.db.ondigitalocean.com")
+DB_NAME = os.getenv("DB_NAME", "220822-stage")
+DB_USER = os.getenv("DB_USER", "doadmin")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_0r_wo19DtRMwwCjS0KK")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
