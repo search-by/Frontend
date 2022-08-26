@@ -88,7 +88,7 @@ class Message:
             if log:
                 custom_text = log
             text_to_write = f'{self.texts[self.status]["log_text"]} {custom_text}'
-            l = Logs(chat_id=self.chat_id, text=f'{text_to_write}')
+            l = Logs(chat_id=self.chat_id, text=f'{text_to_write}', v)
             l.save()
 
     def send_raport(self, raport):
