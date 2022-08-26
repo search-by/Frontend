@@ -348,6 +348,9 @@ class Logs(models.Model):
     chat_id = models.BigIntegerField(default=0)
     user_name = models.CharField(max_length=150, default="-")
     text = models.CharField(max_length=250, default="-")
+    #additional1 = models.CharField(max_length=250, default="0")
+    #additional2 = models.CharField(max_length=250, default="0")
+    #additional3 = models.CharField(max_length=250, default="0")
 
     class Meta:
         verbose_name_plural = 'История'
