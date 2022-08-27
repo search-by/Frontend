@@ -9,6 +9,7 @@ SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
 class LogsAdmin(admin.ModelAdmin):
     search_fields = ('chat_id',)
     list_display = ('date_added', 'chat_id', 'text',)
+    list_display_links = ('chat_id', )
     list_filter = (('date_added', DateRangeFilter), )
 
 

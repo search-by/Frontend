@@ -114,10 +114,10 @@ class Message:
                                              parse_mode=PARSE_MODE, disable_web_page_preview=True)
 
     def send_typing(self):
-        self.bot.bot.send_chat_action(self.update.message.chat.id, action=telegram.ChatAction.TYPING)
+        self.bot.bot.send_chat_action(self.chat_id, action=telegram.ChatAction.TYPING)
 
     def send_document_upload(self):
-        self.bot.bot.send_chat_action(self.update.message.chat.id, action=telegram.ChatAction.UPLOAD_DOCUMENT)
+        self.bot.bot.send_chat_action(self.chat_id, action=telegram.ChatAction.UPLOAD_DOCUMENT)
 
     def message_by_status(self, no_first=False):
         self.bot.bot.send_message(self.chat_id,
