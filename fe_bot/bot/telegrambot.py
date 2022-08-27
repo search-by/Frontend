@@ -53,7 +53,7 @@ def foto_upload(update: Update, context: CallbackContext) -> None:
             return FIRST
         else:
             upload.upload(update, context)
-            Message("PROMO_LIMIT", update=update, context=context).send_document_upload()#message_by_status()
+            Message("PROMO_LIMIT", update=update, context=context).message_by_status()
             Message("SEARCH_STATUS_pim_1", update=update, context=context, log='_').message_by_status()
             return FIRST
     elif u.is_need_to_join_group():
