@@ -54,11 +54,11 @@ class Message:
             [KeyboardButton('Домой'),
              KeyboardButton('Профиль')
              ]]
-        print(self.texts)
+        print(self.texts['INLINE_tip'])
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
-                                                input_field_placeholder=self.texts['СТРОКАПОИСКА_подсказка']['text'])
+                                                input_field_placeholder=self.texts['INLINE_tip']['text'])
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
