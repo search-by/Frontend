@@ -7,7 +7,7 @@ from typing import Dict
 from datetime import datetime
 from bot.models import userlevels, BotSettings
 from partner_program.models import BonusCode
-from django.db.models import Count
+from django.db.models import Count, DateField
 from django.db import models
 from django.shortcuts import get_object_or_404
 import datetime, django
@@ -79,13 +79,14 @@ class User_new(CreateUpdateTracker):
     coment = models.CharField(max_length=512, blank=True)
 
     #@@classmethod
-    def check_bot_status(self):
+    def is_bot_active(self) -> (Tuple[bool, DateField, Chat] or Tuple[bool, DateField, None]):
         bot = Updater(TOKEN)
+        date = django.utils.timezone.now()
         try:
             chat = bot.bot.getChat(chat_id=self.chat_id)
-            return chat
+            return True, date, chat
         except telegram.error.BadRequest:
-            return f"Ban! Last check: {django.utils.timezone.now}"
+            return False, date, None
     '''
     @classmethod
     def is_user_have_limited_promo(cls, update: Update, context) -> bool:
