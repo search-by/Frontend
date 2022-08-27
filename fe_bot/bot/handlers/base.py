@@ -18,7 +18,9 @@ LOCALE = os.getenv("LOCALE", "ua")
 LOCATION = os.getenv("LOCATION", "/home/beadmin/files")
 BOT_NAME = os.getenv("BOT_NAME"#, "fandydev2341bot"
                      )
-TOKEN_RAPORT = os.getenv("TOKEN_RAPORT", "1979319236:AAH33slvXbRE94Aj1G8CAd0m35Ao7Dtq2XE")
+TOKEN_RAPORT = os.getenv("TOKEN_RAPORT"
+                         #, "1979319236:AAH33slvXbRE94Aj1G8CAd0m35Ao7Dtq2XE"
+                         )
 
 
 FIRST, SECONT, THIRD, FOURTH, PROPOSAL1, PROPOSAL2, PLATEGKA1, PLATEGKA2, LIQPAY = range(9)
@@ -55,7 +57,7 @@ class Message:
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
-                                                input_field_placeholder = "⬅ Just upload 📸")
+                                                input_field_placeholder=self.texts['СТРОКАПОИСКА_подсказка']['text'])
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
@@ -101,6 +103,9 @@ class Message:
 
     def send_typing(self):
         self.bot.bot.send_chat_action(self.update.message.chat.id, action=telegram.ChatAction.TYPING)
+
+    def send_document_upload(self):
+        self.bot.bot.send_chat_action(self.update.message.chat.id, action=telegram.ChatAction.UPLOAD_DOCUMENT)
 
     def message_by_status(self, no_first=False):
         self.bot.bot.send_message(self.chat_id,
