@@ -33,7 +33,7 @@ class UserNewAdmin(admin.ModelAdmin):
     def ban_status(self, obj):
         status = obj.is_bot_active()
         if status[0]:
-            ban_status = f'OK! Последняя проверка: {status[1]}'
+            ban_status = f'БОТ {BOT_NAME} АКТИВЕН! Последняя проверка: {status[1]}'
         else:
             ban_status = f'<h4 style="color:Tomato;">БОТ {BOT_NAME} НЕ АКТИВЕН У ПОЛЬЗОВАТЕЛЯ! </h4>  Последняя проверка: {status[0]} <br />'
         return mark_safe(
