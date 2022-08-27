@@ -35,7 +35,7 @@ class UserNewAdmin(admin.ModelAdmin):
         if status[0]:
             ban_status = f'OK! Последняя проверка: {status[1]}'
         else:
-            ban_status = f'<h4 style="color:Tomato;">БОТ {BOT_NAME} АКТИВЕН У ПОЛЬЗОВАТЕЛЯ! </h4>  Последняя проверка: {status[0]} <br />'
+            ban_status = f'<h4 style="color:Tomato;">БОТ {BOT_NAME} НЕ АКТИВЕН У ПОЛЬЗОВАТЕЛЯ! </h4>  Последняя проверка: {status[0]} <br />'
         return mark_safe(
             '<b>{ban_status}</b><br />'.format(
                 ban_status=ban_status
@@ -47,11 +47,11 @@ class UserNewAdmin(admin.ModelAdmin):
         gallery = '<br />'
         if fotos_array[0]:
             for count, item in enumerate(fotos_array[1]["photos"]):
-                if count in (3, 7, 11, 13):
+                if count in (5, 10, 15, 20):
                     gallery += '<br />'
                 gallery += f'<img width="160" src="{item}"/>'
         else:
-            gallery += '/static/admin/img/icon-deletelink.svg'
+            gallery += f'<h5>Нет фото, или бот {BOT_NAME} не активен у пользователя</h5>'
         return mark_safe(gallery)
 
     @admin.display
