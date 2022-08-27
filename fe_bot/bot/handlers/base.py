@@ -103,7 +103,8 @@ class Message:
         self.bot.bot.send_message(self.chat_id,
                                   text=self.texts[self.status]['text'],
                                   parse_mode=PARSE_MODE,
-                                  reply_markup=self.reply_markup
+                                  reply_markup=self.reply_markup,
+                                  input_field_placeholder = "⬅ Just upload 📸"
                                   )
         return FIRST
 
@@ -111,18 +112,24 @@ class Message:
         self.bot.bot.send_message(self.chat_id,
                                   text=self.texts[self.status]['text'],
                                   parse_mode=PARSE_MODE,
-                                  reply_markup=self.reply_markup
+                                  reply_markup=self.reply_markup,
+                                  input_field_placeholder = "⬅ Just upload 📸"
                                   )
         
     def profile(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
-                                  parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
+                                  parse_mode=PARSE_MODE, reply_markup=self.reply_markup, input_field_placeholder="⬅ Just upload 📸")
 
     def inline(self) -> None:
-        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE, disable_web_page_preview=True)
+        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,
+                                  disable_web_page_preview=True, input_field_placeholder="⬅️ Just upload 📸")
+
 
     def start(self, update: Update, context: CallbackContext) -> None:
-        update.message.reply_text(self.texts[self.status]['text'], parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
+        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,
+                                  disable_web_page_preview=True, input_field_placeholder="⬅ Just upload 📸")
+        #update.message.reply_text(self.texts[self.status]['text'], parse_mode=PARSE_MODE,
+        #                          reply_markup=self.reply_markup)
 
     def __getitem__(self):
         return ['is_allowed']
