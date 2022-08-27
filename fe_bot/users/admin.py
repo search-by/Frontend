@@ -5,6 +5,9 @@ from rangefilter.filters import DateRangeFilter
 import os
 import requests
 
+BOT_NAME = os.getenv("BOT_NAME"
+                  #, "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
+                  )
 TOKEN = os.getenv("TOKEN"
                   #, "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
                   )
@@ -32,7 +35,7 @@ class UserNewAdmin(admin.ModelAdmin):
         if status[0]:
             ban_status = f'OK! Последняя проверка: {status[1]}'
         else:
-            ban_status = f'<h3 style="color:Tomato;">БОТ ОТКЛЮЧЕН! </h3>  Последняя проверка: {status[0]} <br />'
+            ban_status = f'<h4 style="color:Tomato;">БОТ {BOT_NAME} АКТИВЕН У ПОЛЬЗОВАТЕЛЯ! </h4>  Последняя проверка: {status[0]} <br />'
         return mark_safe(
             '<b>{ban_status}</b><br />'.format(
                 ban_status=ban_status
