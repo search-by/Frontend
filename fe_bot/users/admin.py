@@ -43,8 +43,8 @@ class UserNewAdmin(admin.ModelAdmin):
         fotos_array = obj.get_profile_fotos()
         gallery = '<br />'
         if fotos_array[0]:
-            for item in fotos_array[1]["photos"]:
-                gallery += f'<img width="160" src="https://api.telegram.org/file/bot{TOKEN}/{item}"/>'
+            for item in fotos_array[1]["photos"]:#https://api.telegram.org/file/bot{TOKEN}/
+                gallery += f'<img width="160" src="{item}"/>'
         else:
             gallery += '/static/admin/img/icon-deletelink.svg'
         return mark_safe(gallery)
