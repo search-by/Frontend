@@ -81,7 +81,7 @@ class User_new(CreateUpdateTracker):
     #@@classmethod
     def is_bot_active(self) -> (Tuple[bool, DateField, Chat] or Tuple[bool, DateField, None]):
         bot = Updater(TOKEN)
-        date = django.utils.timezone.now()
+        date = django.utils.timezone.now().strftime("%d-%m-%Y %H:%M")
         try:
             chat = bot.bot.getChat(chat_id=self.chat_id)
             return True, date, chat
