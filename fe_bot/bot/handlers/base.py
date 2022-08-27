@@ -38,6 +38,7 @@ class Message:
         self.chat_id = update.message.chat.id
         self.menu_text_profile = BotTexts.objects.all().filter(message_code='MENU_TEXT_PROFILE')
         self.menu_text_home = BotTexts.objects.all().filter(message_code='BUTTON_HOME')
+        self.inline_tip = BotTexts.objects.get(message_code='INLINE_tip').txt(self.locale)
 
         for big_item in self.raw_texts:
             cleaned_text = emoji.emojize(self.insert_vars(big_item.txt(self.locale)),
@@ -58,7 +59,7 @@ class Message:
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
-                                                input_field_placeholder=self.texts['INLINE_tip']['text'])
+                                                input_field_placeholder=self.inline_tip)
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
