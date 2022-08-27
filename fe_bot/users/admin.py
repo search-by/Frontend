@@ -24,7 +24,7 @@ class UserNewAdmin(admin.ModelAdmin):
     @admin.display
     def ban_status(self, obj):
         return mark_safe(
-            '<b>ban_status</b><br />'.format(
+            '<b>{ban_status}</b><br />'.format(
                 ban_status=obj.check_bot_status()
             ))
 
