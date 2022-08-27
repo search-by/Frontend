@@ -38,8 +38,8 @@ class Message:
         self.chat_id = update.message.chat.id
         self.menu_text_profile = BotTexts.objects.all().filter(message_code='MENU_TEXT_PROFILE')
         self.menu_text_home = BotTexts.objects.all().filter(message_code='BUTTON_HOME')
-        print(BotTexts.objects.all().filter(message_code='INLINE_tip')[0])
-        print(BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale))
+        #print(BotTexts.objects.all().filter(message_code='INLINE_tip')[0])
+        #print()
         #self.inline_tip = BotTexts.object.get(message_code='INLINE_tip').txt(self.locale)
 
         for big_item in self.raw_texts:
@@ -57,11 +57,11 @@ class Message:
             [KeyboardButton('Домой'),
              KeyboardButton('Профиль')
              ]]
-        print(self.texts['INLINE_tip'])
+        #print(self.texts['INLINE_tip'])
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
-                                                input_field_placeholder=self.inline_tip)
+                                                input_field_placeholder=BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale))
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
