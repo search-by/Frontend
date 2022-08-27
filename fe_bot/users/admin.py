@@ -13,13 +13,20 @@ class LogsAdmin(admin.ModelAdmin):
 
 
 class UserNewAdmin(admin.ModelAdmin):
-    fields = ('name', 'referer_link', 'language_code', 'total_searches',
+    fields = ('name', 'ban_status', 'referer_link', 'language_code', 'total_searches',
     'level',  'user_logs', 'reg_date', 'balance', 'extraSearches', 'coment', )
-    readonly_fields = ('name', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
+    readonly_fields = ('name', 'ban_status', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
     search_fields = ('username', 'first_name', 'last_name',  'chat_id', )
     list_display = ('reg_date', 'chat_id', 'total_searches_1', 'ref_code', '__str__')
     list_display_links = ('chat_id', 'ref_code')
     list_filter = (('reg_date', DateRangeFilter), 'level', 'ref_code',)
+
+    @admin.display
+    def ban_status(self, obj):
+        return mark_safe(
+            '<b>ban_status</b><br />'.format(
+                ban_status=obj.check_bot_status()
+            ))
 
     @admin.display
     def name(self, obj):

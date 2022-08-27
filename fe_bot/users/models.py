@@ -12,6 +12,11 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 import datetime, django
 import os
+from telegram.ext import Updater
+from telegram import Chat
+import telegram
+TOKEN = os.getenv("TOKEN")#"1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
+
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 LOCALE = os.getenv("LOCALE", "ua")
@@ -72,6 +77,15 @@ class User_new(CreateUpdateTracker):
     extraSearches = models.BigIntegerField(default=0)
     reg_date = models.DateField(default=django.utils.timezone.now)
     coment = models.CharField(max_length=512, blank=True)
+
+    #@@classmethod
+    def check_bot_status(self):
+        bot = Updater(TOKEN)
+        try:
+            chat = bot.bot.getChat(chat_id=self.chat_id)
+            return chat
+        except telegram.error.BadRequest:
+            return f"Ban! Last check: {django.utils.timezone.now}"
     '''
     @classmethod
     def is_user_have_limited_promo(cls, update: Update, context) -> bool:
