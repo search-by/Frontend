@@ -90,7 +90,7 @@ class User_new(CreateUpdateTracker):
         except telegram.error.BadRequest:
             return False, date, None
 
-    def get_profile_fotos(self, size=0, limmit=5) -> Tuple[bool, Dict]:
+    def get_profile_fotos(self, size=0, limmit=20) -> Tuple[bool, Dict]:
         #bot = Updater(TOKEN)
         photos = {"total_count": 0,
                   "date": datetime.datetime.now().strftime("%d-%m-%Y %H:%M"),
