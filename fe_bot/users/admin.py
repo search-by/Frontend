@@ -32,7 +32,7 @@ class UserNewAdmin(admin.ModelAdmin):
         if status[0]:
             ban_status = f'OK! Последняя проверка: {status[1]}'
         else:
-            ban_status = f'<h3 style="color:Tomato;">БОТ ОТКЛЮЧЕН! </h3>  Последняя проверка: {status[1]} <br />'
+            ban_status = f'<h3 style="color:Tomato;">БОТ ОТКЛЮЧЕН! </h3>  Последняя проверка: {status[0]} <br />'
         return mark_safe(
             '<b>{ban_status}</b><br />'.format(
                 ban_status=ban_status
@@ -43,8 +43,8 @@ class UserNewAdmin(admin.ModelAdmin):
         fotos_array = obj.get_profile_fotos()
         gallery = '<br />'
         if fotos_array[0]:
-            for item in fotos_array[1]:
-                gallery += f'<img width="320" src="https://api.telegram.org/file/bot{TOKEN}/{item}"/>'
+            for item in fotos_array[1]["photos"]:
+                gallery += f'<img width="160" src="https://api.telegram.org/file/bot{TOKEN}/{item}"/>'
         else:
             gallery += '/static/admin/img/icon-deletelink.svg'
         return mark_safe(gallery)
