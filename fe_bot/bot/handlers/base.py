@@ -41,7 +41,11 @@ class Message:
         #print(BotTexts.objects.all().filter(message_code='INLINE_tip')[0])
         #print()
         #self.inline_tip = BotTexts.object.get(message_code='INLINE_tip').txt(self.locale)
-
+        try:
+            self.raw_texts.append(BotTexts.objects.all().filter(message_code='INLINE_tip')[0])
+        except Exception as e:
+            print(e)
+            self.raw_texts['INLINE_tip'] = BotTexts.objects.all().filter(message_code='INLINE_tip')[0]
         for big_item in self.raw_texts:
             cleaned_text = emoji.emojize(self.insert_vars(big_item.txt(self.locale)),
                                          use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=", "\=").replace("'", "\'").replace("_", "\_")
@@ -57,11 +61,13 @@ class Message:
             [KeyboardButton('Домой'),
              KeyboardButton('Профиль')
              ]]
-        #print(self.texts['INLINE_tip'])
+        for one_text in self.texts:
+            print(one_text)
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
-                                                input_field_placeholder=BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale))
+                                                input_field_placeholder=self.texts['INLINE_tip']['text']#BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale)
+                                                )
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
