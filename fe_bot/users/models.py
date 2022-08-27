@@ -15,6 +15,8 @@ import os
 from telegram.ext import Updater
 from telegram import Chat
 import telegram
+import requests
+
 TOKEN = os.getenv("TOKEN")#"1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
 
 
@@ -87,6 +89,33 @@ class User_new(CreateUpdateTracker):
             return True, date, chat
         except telegram.error.BadRequest:
             return False, date, None
+
+    def get_profile_fotos(self, size=0, limmit=5) -> Tuple[bool, Dict]:
+        #bot = Updater(TOKEN)
+        photos = {"total_count": 0,
+                  "date": datetime.datetime.now().strftime("%d-%m-%Y %H:%M"),
+                  "photos": []}
+        try:
+            profile_photos = \
+            requests.get(f'https://api.telegram.org/bot{TOKEN}/getUserProfilePhotos?user_id={self.chat_id}').json()['result']
+            photos["total_count"] = int(profile_photos["total_count"])
+            if photos["total_count"] == 0:
+                return True, photos
+        except Exception as e:
+            # print(e)
+            return False, photos
+        for count, foto_array in enumerate(profile_photos["photos"]):
+            if count >= limmit:
+                return True, photos
+            try:
+                files_request = requests.get(
+                    f'https://api.telegram.org/bot{TOKEN}/getfile?file_id={foto_array[size]["file_id"]}')
+                file_path = files_request.json()['result']['file_path']
+                photos['photos'].append(f'https://api.telegram.org/file/bot{TOKEN}/{file_path}')
+            except Exception as e:
+                pass
+        return True, photos
+
     '''
     @classmethod
     def is_user_have_limited_promo(cls, update: Update, context) -> bool:

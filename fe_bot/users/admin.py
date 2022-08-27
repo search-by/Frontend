@@ -3,7 +3,11 @@ from django.utils.html import mark_safe
 from .models import Logs, User_new
 from rangefilter.filters import DateRangeFilter
 import os
+import requests
 
+TOKEN = os.getenv("TOKEN"
+                  #, "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
+                  )
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
 
 class LogsAdmin(admin.ModelAdmin):
@@ -14,9 +18,9 @@ class LogsAdmin(admin.ModelAdmin):
 
 
 class UserNewAdmin(admin.ModelAdmin):
-    fields = ('name', 'ban_status', 'referer_link', 'language_code', 'total_searches',
+    fields = ('profile_fotos', 'name', 'ban_status', 'referer_link', 'language_code', 'total_searches',
     'level',  'user_logs', 'reg_date', 'balance', 'extraSearches', 'coment', )
-    readonly_fields = ('name', 'ban_status', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
+    readonly_fields = ('profile_fotos', 'name', 'ban_status', 'referer_link', 'reg_date', 'total_searches', 'user_logs')
     search_fields = ('username', 'first_name', 'last_name',  'chat_id', )
     list_display = ('reg_date', 'chat_id', 'total_searches_1', 'ref_code', '__str__')
     list_display_links = ('chat_id', 'ref_code')
@@ -33,6 +37,17 @@ class UserNewAdmin(admin.ModelAdmin):
             '<b>{ban_status}</b><br />'.format(
                 ban_status=ban_status
             ))
+
+    @admin.display
+    def profile_fotos(self, obj):
+        fotos_array = obj.get_profile_fotos()
+        gallery = '<br />'
+        if fotos_array[0]:
+            for item in fotos_array[1]:
+                gallery += f'<img width="320" src="https://api.telegram.org/file/bot{TOKEN}/{item}"/>'
+        else:
+            gallery += '/static/admin/img/icon-deletelink.svg'
+        return mark_safe(gallery)
 
     @admin.display
     def name(self, obj):
