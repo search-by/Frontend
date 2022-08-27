@@ -13,7 +13,9 @@ SECRET_KEY = os.getenv("SECRET_KEY",
 TOKEN = os.getenv("TOKEN"
                  # , '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo'
                   )
-DEBUG = os.getenv("DEBUG", False)
+DEBUG = os.getenv("DEBUG"
+                  #, False
+                  )
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST",
                     #"test-260822-do-user-11581829-0.b.db.ondigitalocean.com"
