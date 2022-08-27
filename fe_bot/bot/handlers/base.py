@@ -52,7 +52,10 @@ class Message:
             [KeyboardButton('Домой'),
              KeyboardButton('Профиль')
              ]]
-        self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first, selective=True, resize_keyboard=True)
+        self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
+                                                #selective=True,
+                                                resize_keyboard=True,
+                                                input_field_placeholder = "⬅ Just upload 📸")
 
         if log: self.write_logs(log)
         if raport: self.send_raport(raport)
@@ -103,8 +106,7 @@ class Message:
         self.bot.bot.send_message(self.chat_id,
                                   text=self.texts[self.status]['text'],
                                   parse_mode=PARSE_MODE,
-                                  reply_markup=self.reply_markup,
-                                  input_field_placeholder = "⬅ Just upload 📸"
+                                  reply_markup=self.reply_markup
                                   )
         return FIRST
 
@@ -112,22 +114,21 @@ class Message:
         self.bot.bot.send_message(self.chat_id,
                                   text=self.texts[self.status]['text'],
                                   parse_mode=PARSE_MODE,
-                                  reply_markup=self.reply_markup,
-                                  input_field_placeholder = "⬅ Just upload 📸"
+                                  reply_markup=self.reply_markup
                                   )
         
     def profile(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
-                                  parse_mode=PARSE_MODE, reply_markup=self.reply_markup, input_field_placeholder="⬅ Just upload 📸")
+                                  parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
 
     def inline(self) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,
-                                  disable_web_page_preview=True, input_field_placeholder="⬅️ Just upload 📸")
+                                  disable_web_page_preview=True)
 
 
     def start(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,
-                                  disable_web_page_preview=True, input_field_placeholder="⬅ Just upload 📸")
+                                  disable_web_page_preview=True)
         #update.message.reply_text(self.texts[self.status]['text'], parse_mode=PARSE_MODE,
         #                          reply_markup=self.reply_markup)
 
