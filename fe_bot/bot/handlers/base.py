@@ -54,6 +54,7 @@ class Message:
             [KeyboardButton('Домой'),
              KeyboardButton('Профиль')
              ]]
+        print(self.texts)
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 #selective=True,
                                                 resize_keyboard=True,
