@@ -81,12 +81,14 @@ def profile(update: Update, context: CallbackContext) -> None:
 
 
 def inline(update: Update, context: CallbackContext) -> None:
+
     u = UserValidator(update, context)
     is_allowed = check_ban_and_maitenence(u)
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
         return FIRST
     quer = update.callback_query
+    print(quer.data)
     if quer.data == "INLINE_TEXT_SUPPORT":
         m = Message('MESSAGE_TEXT_DONATE', chat_id=quer.message.chat.id, log='_')
         m.inline()
