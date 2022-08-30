@@ -14,7 +14,7 @@ class TaskAdmin(admin.ModelAdmin):
     readonly_fields = ('user', 'last_update', 'pimeyes_status', 'type', 'result', 'creation_date', 'file', 'logs', 'user_lvl')
     list_display = ('last_update', 'user_id', 'pimeyes_status', 'status', 'result', 'user_lvl', )
     list_display_links = ('user_id', 'last_update', )
-    list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl', ('ser_id', admin.AllValuesFieldListFilter))
+    list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl', ('user_id', admin.filters.SimpleListFilter))
 
     @admin.display
     def user_id(self, obj):
