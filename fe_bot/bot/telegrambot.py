@@ -88,7 +88,7 @@ def inline(update: Update, context: CallbackContext) -> None:
         Message(is_allowed, update=update, context=context).message_by_status()
         return FIRST
     quer = update.callback_query
-    print(quer.data)
+    print(quer)
     if quer.data == "INLINE_TEXT_SUPPORT":
         m = Message('MESSAGE_TEXT_DONATE', chat_id=quer.message.chat.id, log='_')
         m.inline()
