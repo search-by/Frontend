@@ -90,6 +90,10 @@ def inline(update: Update, context: CallbackContext) -> None:
     if quer.data == "INLINE_TEXT_SUPPORT":
         m = Message('MESSAGE_TEXT_DONATE', chat_id=quer.message.chat.id, log='_')
         m.inline()
+    elif quer.data[:9] == "feedback_":
+        Message('SEARCH_REKLAMA', chat_id=quer.message.chat.id, log='_').message_by_status()
+    else:
+        pass
     return FIRST
 
 

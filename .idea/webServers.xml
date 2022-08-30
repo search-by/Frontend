@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="3255ac82-cc48-402a-ab45-60b567421e3b" name="TEST__FE (3)">
+      <webServer id="3255ac82-cc48-402a-ab45-60b567421e3b" name="TEST__FE (3) (project level)">
         <fileTransfer rootFolder="/home/beadmin" accessType="SFTP" host="161.35.158.90" port="22" sshConfigId="e5135eb7-fa69-4d7f-b039-80185bb0d237" sshConfig="TEST__FE" keyPair="true" />
       </webServer>
       <webServer id="5762e83a-57cb-42bb-8932-f2af7faef7a5" name="PROD_FE">
