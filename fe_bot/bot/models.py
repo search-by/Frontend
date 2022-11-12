@@ -30,16 +30,21 @@ class userlevels(models.Model):
     name = models.CharField(max_length=20, default="NEW", help_text="Название уровня(Отображается пользователю)")
     free_day = models.PositiveSmallIntegerField(default=0, help_text="Макс. поисков можно использовать в день")
     pimeyes_results_count = models.PositiveSmallIntegerField(default=0,
-                                                             help_text="Сколько присылать результатов PY. 0 Чтобы отключить")
+                                                             help_text="Сколько присылать результатов PY. "
+                                                                       "0 Чтобы отключить")
+    PY_tolerance = models.DecimalField(max_digits=16, decimal_places=14, default=99.99)
     findclone_results_count = models.PositiveSmallIntegerField(default=0,
-                                                             help_text="Сколько присылать результатов FC. 0 Чтобы отключить")
+                                                             help_text="Сколько присылать результатов FC. "
+                                                                       "0 Чтобы отключить")
+    FC_tolerance = models.DecimalField(max_digits=5, decimal_places=3, default=99.99)
     show_ads = models.BooleanField(default=False, help_text="Показывать рекламу после загрузки фото")
     send_full_results = models.BooleanField(default=False)
     group_requierd = models.BooleanField(default=False,
                                          help_text="Запрашивать членство в группе перед загрузкой фото. ВАЖНО!!! "
                                                    "Бота нужно добавить в администраторы канала.")
     group_name = models.CharField(default='@search_by_face_channel', max_length=50,
-                                  help_text="Имя канала на который нужно подписатсья. Формат: @durov_1123_durov. ВАЖНО!!! "
+                                  help_text="Имя канала на который нужно подписатсья. Формат: @durov_1123_durov. "
+                                            "ВАЖНО!!! "
                                             "Бота нужно добавить в администраторы канала.")
     coment = models.TextField(blank=True, null=True,
                               help_text="Поле для заметок. На работу не влияет.")

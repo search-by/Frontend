@@ -1,7 +1,6 @@
 # coding=utf-8
 # django_telegram_bot/apps.py
 import time
-
 from django.apps import AppConfig
 from django.apps import apps
 from django.conf import settings
@@ -23,6 +22,7 @@ logger = logging.getLogger()
 TELEGRAM_BOT_MODULE_NAME = 'telegrambot'
 WEBHOOK_MODE, POLLING_MODE = range(2)
 
+
 class classproperty(property):
     def __get__(self, obj, objtype=None):
         return super(classproperty, self).__get__(objtype)
@@ -31,8 +31,8 @@ class classproperty(property):
     def __delete__(self, obj):
         super(classproperty, self).__delete__(type(obj))
 
-class DjangoTelegramBot(AppConfig):
 
+class DjangoTelegramBot(AppConfig):
     name = 'django_telegrambot'
     verbose_name = 'Django TelegramBot'
     ready_run = False

@@ -1,5 +1,4 @@
 from __future__ import annotations
-from decimal import Decimal
 from django.utils.timezone import now
 from typing import Union, Optional, Tuple
 from telegram import Update
@@ -10,15 +9,15 @@ from partner_program.models import BonusCode
 from django.db.models import Count, DateField
 from django.db import models
 from django.shortcuts import get_object_or_404
-import datetime, django
+import datetime
+import django
 import os
 from telegram.ext import Updater
 from telegram import Chat
 import telegram
 import requests
 
-TOKEN = os.getenv("TOKEN")#"1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM"
-
+TOKEN = os.getenv("TOKEN")
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 LOCALE = os.getenv("LOCALE", "ua")
@@ -80,7 +79,6 @@ class User_new(CreateUpdateTracker):
     reg_date = models.DateField(default=django.utils.timezone.now)
     coment = models.CharField(max_length=512, blank=True)
 
-    #@@classmethod
     def is_bot_active(self) -> (Tuple[bool, DateField, Chat] or Tuple[bool, DateField, None]):
         bot = Updater(TOKEN)
         date = django.utils.timezone.now().strftime("%d-%m-%Y %H:%M")
@@ -91,7 +89,6 @@ class User_new(CreateUpdateTracker):
             return False, date, None
 
     def get_profile_fotos(self, size=0, limmit=20) -> Tuple[bool, Dict]:
-        #bot = Updater(TOKEN)
         photos = {"total_count": 0,
                   "date": datetime.datetime.now().strftime("%d-%m-%Y %H:%M"),
                   "photos": []}
@@ -102,7 +99,7 @@ class User_new(CreateUpdateTracker):
             if photos["total_count"] == 0:
                 return True, photos
         except Exception as e:
-            # print(e)
+            print(e)
             return False, photos
         for count, foto_array in enumerate(profile_photos["photos"]):
             if count >= limmit:
@@ -115,72 +112,6 @@ class User_new(CreateUpdateTracker):
             except Exception as e:
                 pass
         return True, photos
-
-    '''
-    @classmethod
-    def is_user_have_limited_promo(cls, update: Update, context) -> bool:
-        data = extract_user_data_from_update(update)
-        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
-        if u.level.searches_max > 0:
-            all_searches = u.task_set.all().annotate(c=Count('id'))
-            if len(all_searches) > u.level.searches_max:
-                return True
-            else:
-                return False
-        return False
-
-    
-    @classmethod
-    def is_user_in_the_group(cls, update: Update, context) -> bool:
-        data = extract_user_data_from_update(update)
-        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
-
-        if u.level.group_requierd:
-            try:
-                u.bot = Updater(TOKEN)
-                if u.bot.bot.getChatMember(str(u.level.group_name), u.chat_id):
-                    return True
-                else:
-                    return False
-            except Exception as e:
-                return False
-
-    
-    def is_user_in_group(self):
-        return True
-        if self.level.group_requierd:
-            try:
-                self.bot = Updater(TOKEN)
-                if self.bot.bot.getChatMember(str(self.level.group_name), self.chat_id):
-                    return True
-                else:
-                    return False
-            except Exception as e:
-                return False
-
-    @classmethod
-    def is_user_baned(cls, update: Update, context) -> bool:
-        data = extract_user_data_from_update(update)
-        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
-        if u.level.name == 'BAN':
-            return True
-        else:
-            return False
-
-    
-    @classmethod
-    def create_self_auto_bonus_code(self, u):
-        b = BonusCode()
-        b.type = 'Авто'
-        b.bonus_code = u.chat_id
-        b.code_owner = u
-        b.code_creator = u
-        try:
-            b.save()
-            return b
-        except Exception:
-            pass
-    '''
 
     @classmethod
     def is_user_created(cls, update: Update, context) -> Tuple[User_new, bool]:
@@ -227,7 +158,6 @@ class User_new(CreateUpdateTracker):
     @classmethod
     def get_search_type(cls, u: User_new):
         u.count_of_searches()
-        print(f"u.searches: {u.searches}")
         if u.searches['searches_left_today'] > 0 and u.searches['searches_left_this_mounth'] > 0:
             return 'free'
         if u.extraSearches > 0:
@@ -259,7 +189,6 @@ class User_new(CreateUpdateTracker):
                 level = int(level)
                 u.level = userlevels.objects.get(pk=1)
             except ValueError:
-                print("chat not f")
                 u.level = userlevels.objects.get(name=level)
         elif new:
             u.level = default_lvl
@@ -274,6 +203,18 @@ class User_new(CreateUpdateTracker):
             return True
         else:
             return False
+
+    def get_search_type(self):
+        self.count_of_searches()
+        if self.searches['searches_left_today'] > 0 and self.searches['searches_left_this_mounth'] > 0:
+            return 'free'
+        if self.extraSearches > 0:
+            return 'dop'
+        if self.balance >= self.level.additional_search_price:
+            return 'money'
+        else:
+            return False
+
     '''
     def pay(self, amount):
         try:
@@ -289,20 +230,7 @@ class User_new(CreateUpdateTracker):
         self.save()
         message = f'{abs(d)}$ снято с баланса'
         return True
-    '''
-    #@classmethod
-    def get_search_type(self):
-        self.count_of_searches()
-        if self.searches['searches_left_today'] > 0 and self.searches['searches_left_this_mounth'] > 0:
-            return 'free'
-        if self.extraSearches > 0:
-            return 'dop'
-        if self.balance >= self.level.additional_search_price:
-            return 'money'
-        else:
-            return False
-    '''
-    
+
     # @classmethod
     def addbalance(self, amount):
         try:
@@ -362,8 +290,67 @@ class User_new(CreateUpdateTracker):
         else:
             return False
 
-    '''
+    @classmethod
+    def is_user_have_limited_promo(cls, update: Update, context) -> bool:
+        data = extract_user_data_from_update(update)
+        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
+        if u.level.searches_max > 0:
+            all_searches = u.task_set.all().annotate(c=Count('id'))
+            if len(all_searches) > u.level.searches_max:
+                return True
+            else:
+                return False
+        return False
 
+    @classmethod
+    def is_user_in_the_group(cls, update: Update, context) -> bool:
+        data = extract_user_data_from_update(update)
+        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
+
+        if u.level.group_requierd:
+            try:
+                u.bot = Updater(TOKEN)
+                if u.bot.bot.getChatMember(str(u.level.group_name), u.chat_id):
+                    return True
+                else:
+                    return False
+            except Exception as e:
+                return False
+
+    def is_user_in_group(self):
+        return True
+        if self.level.group_requierd:
+            try:
+                self.bot = Updater(TOKEN)
+                if self.bot.bot.getChatMember(str(self.level.group_name), self.chat_id):
+                    return True
+                else:
+                    return False
+            except Exception as e:
+                return False
+
+    @classmethod
+    def is_user_baned(cls, update: Update, context) -> bool:
+        data = extract_user_data_from_update(update)
+        u, created = cls.objects.update_or_create(chat_id=data["chat_id"], defaults=data)
+        if u.level.name == 'BAN':
+            return True
+        else:
+            return False
+
+    @classmethod
+    def create_self_auto_bonus_code(self, u):
+        b = BonusCode()
+        b.type = 'Авто'
+        b.bonus_code = u.chat_id
+        b.code_owner = u
+        b.code_creator = u
+        try:
+            b.save()
+            return b
+        except Exception:
+            pass
+    '''
     #@classmethod
     def count_of_searches(self):
         currentMonth = datetime.datetime.now().month
@@ -392,9 +379,6 @@ class Logs(models.Model):
     chat_id = models.BigIntegerField(default=0)
     user_name = models.CharField(max_length=150, default="-")
     text = models.CharField(max_length=250, default="-")
-    #additional1 = models.CharField(max_length=250, default="0")
-    #additional2 = models.CharField(max_length=250, default="0")
-    #additional3 = models.CharField(max_length=250, default="0")
 
     class Meta:
         verbose_name_plural = 'История'

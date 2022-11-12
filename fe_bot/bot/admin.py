@@ -6,7 +6,7 @@ from django.db import models
 
 class SettingsAdmin(admin.ModelAdmin):
     actions = None
-    fields = ('default_locale','default_lvl', 'maitenance', 'raport_bot_key', "findclone_login",
+    fields = ('default_locale', 'default_lvl', 'maitenance', 'raport_bot_key', "findclone_login",
               "findclone_password", "pimeyes_login", "pimeyes_password")
 
 
@@ -22,7 +22,7 @@ class TextsAdmin(admin.ModelAdmin):
 
 
 class LevelAdmin(admin.ModelAdmin):
-    fields = ('name',  'free_day', 'pimeyes_results_count', "findclone_results_count",
+    fields = ('name',  'free_day', 'pimeyes_results_count', 'PY_tolerance', "findclone_results_count", 'FC_tolerance',
               "show_ads", "send_full_results", "group_requierd", "group_name", "coment",)
     list_display = ('name', "show_ads", "send_full_results", "group_requierd",
                     'free_day', 'pimeyes_results_count', "findclone_results_count",)

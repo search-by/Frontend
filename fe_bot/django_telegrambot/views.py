@@ -10,9 +10,7 @@ import json
 import telegram
 from telegram.error import (TelegramError, Unauthorized, BadRequest,
                             TimedOut, ChatMigrated, NetworkError)
-# import the logging library
 import logging
-import requests
 logger = logging.getLogger(__name__)
 
 

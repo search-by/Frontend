@@ -4,31 +4,15 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-SERVER_ADRESS = os.getenv("SERVER_ADRESS"
-                          #, '331f-5-79-69-167.ngrok.io'
-                          )
-SECRET_KEY = os.getenv("SECRET_KEY",
-                      # 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0'
-                       )
-TOKEN = os.getenv("TOKEN"
-                 # , '5420343912:AAHmj752TQOLi6JdKHYygJJpnqu0WtJBEdo'
-                  )
-DEBUG = os.getenv("DEBUG"
-                  #, False
-                  )
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", '05d2-5-79-69-167.ngrok.io')
+SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
+TOKEN = '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w'
+DEBUG = os.getenv("DEBUG", True)
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
-DB_HOST = os.getenv("DB_HOST",
-                    #"test-260822-do-user-11581829-0.b.db.ondigitalocean.com"
-                    )
-DB_NAME = os.getenv("DB_NAME",
-                    #"220822-stage"
-                    )
-DB_USER = os.getenv("DB_USER",
-                    #"doadmin"
-                    )
-DB_PASSWORD = os.getenv("DB_PASSWORD",
-                        #"AVNS_0r_wo19DtRMwwCjS0KK"
-                        )
+DB_HOST = os.getenv("DB_HOST", "main-040922-do-user-11581829-0.b.db.ondigitalocean.com")
+DB_NAME = os.getenv("DB_NAME", "220822-stage")
+DB_USER = os.getenv("DB_USER", "doadmin")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_0r_wo19DtRMwwCjS0KK")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,7 +60,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fe_bot.wsgi.application'
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
+username = doadmin
+password = AVNS_pKxTgdwJL6UxsEkYUEv hide
+host = db-postgresql-nyc1-09779-do-user-12834112-0.b.db.ondigitalocean.com
+port = 25060
+database = fe_db
+sslmode = require
+
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

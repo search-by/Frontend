@@ -1,8 +1,8 @@
 from .models import Logs
-from users.serializer import UserSearchesSerializerPimeyes
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from tasks.models import Task
+
+#ОСТАЛОСЬ ОТ ПРОШЛОЙ РЕАЛИЗАЦИИ КОГДА ЛОГИ ЧЕРЕЗ АПИ ПЕРЕДАВАЛИСЬ. СЕЙЧАС НЕ ИСПОЛЬЗУЕТСЯ
 
 
 class LogWiew(APIView):
@@ -16,18 +16,3 @@ class LogWiew(APIView):
                  additional1=add1, additional2=add2, additional3=add3)
         l.save()
         return Response({"query": True})
-
-
-class PimeyesView(APIView):
-    def put(self, request):
-        data = request.data.get('data')
-        us = Task.objects.all().filter(UUID=data['UUID'])
-        item = us[0]
-        data['id'] = item.id
-        serializer = UserSearchesSerializerPimeyes(instance=us[0], data=data, partial=True)
-        if serializer.is_valid(raise_exception=True):
-            saved = serializer.save()
-        else:
-            print("Invalid")
-        return Response({"success": True}, status=200)
-

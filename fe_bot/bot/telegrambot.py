@@ -9,8 +9,9 @@ from users.models import User_new
 from django.db.models import Q
 from bot.handlers.usercheck import UserValidator
 
-FIRST, SECOND = range(2)
+FIRST = range(1)
 
+#ГОВНОКОД, НУЖНО ПОДИЧСТИТЬ. ЗАТО РАБОТАЕТ
 
 def check_ban_and_maitenence(user: User_new):
     if user.is_user_baned():
@@ -28,7 +29,7 @@ def start(update: Update, context: CallbackContext) -> None:
         Message(is_allowed, update=update, context=context).message_by_status()
     else:
         Message("/start", update=update, context=context, log=update.message.text).message_by_status()
-    return FIRST
+    #return FIRST
 
 
 def anytext(update: Update, context: CallbackContext) -> None:
@@ -52,7 +53,7 @@ def foto_upload(update: Update, context: CallbackContext) -> None:
             Message("SEARCH_DAY_LIMIT", update=update, context=context, log='_').message_by_status()
             return FIRST
         else:
-            upload.upload(update, context)
+            upload.add_task(update, context)
             try:
                 Message("PROMO_LIMIT", update=update, context=context, log='_').send_document_upload()
             except Exception as e:
@@ -63,7 +64,7 @@ def foto_upload(update: Update, context: CallbackContext) -> None:
     elif u.is_need_to_join_group():
         Message("MESSAGE_TEXT_PODPISKA", update=update, context=context, log='_').message_by_status()
     else:
-        upload.upload(update, context)
+        upload.add_task(update, context)
         Message("SEARCH_STATUS_pim_1", update=update, context=context, log='_').message_by_status()
     if u.is_need_to_show_ads():
         Message("SEARCH_REKLAMA", update=update, context=context, log='_').message_by_status()
@@ -81,14 +82,12 @@ def profile(update: Update, context: CallbackContext) -> None:
 
 
 def inline(update: Update, context: CallbackContext) -> None:
-
     u = UserValidator(update, context)
     is_allowed = check_ban_and_maitenence(u)
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
         return FIRST
     quer = update.callback_query
-    print(quer)
     if quer.data == "INLINE_TEXT_SUPPORT":
         m = Message('MESSAGE_TEXT_DONATE', chat_id=quer.message.chat.id, log='_')
         m.inline()
@@ -99,16 +98,6 @@ def inline(update: Update, context: CallbackContext) -> None:
     return FIRST
 
 
-def info(update: Update, context: CallbackContext) -> None:
-    u = UserValidator(update, context)
-    is_allowed = check_ban_and_maitenence(u)
-    if is_allowed:
-        Message(is_allowed, update=update, context=context).message_by_status()
-    else:
-        Message('TEXTS_BOTINFO', update, log='_').profile(update, context)
-    return FIRST
-
-
 def main():
     dp = DjangoTelegramBot.dispatcher
     raw_texts = BotTexts.objects.all().filter(Q(message_code="BUTTON_MENU_PROFILE") | Q(message_code="BUTTON_HOME"))
@@ -116,7 +105,6 @@ def main():
     conv_handler = ConversationHandler(
         per_message=False,
         entry_points=[CommandHandler('start', start),
-                      CommandHandler('info', info),
                       CommandHandler('profile', profile),
                       MessageHandler(Filters.photo, foto_upload),
                       MessageHandler(Filters.regex('^.*Профіль$|^.*Профиль$|^.*Profile$'), profile),
@@ -130,7 +118,6 @@ def main():
         states={
             FIRST: [CommandHandler('start', start),
                     CommandHandler('profile', profile),
-                    CommandHandler('info', info),
                     MessageHandler(Filters.regex('^.*Профіль$|^.*Профиль$|^.*Profile$'), profile),
                     MessageHandler(Filters.regex('^.*Додому$|^.*Домой$|^.*Home$'), start),
                     MessageHandler(Filters.regex('^.*$'), anytext),

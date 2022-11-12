@@ -1,6 +1,7 @@
 import django
 from django.db import models
 
+
 class BonusCode(models.Model):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,4 +19,3 @@ class BonusCode(models.Model):
 
     class Meta:
         verbose_name_plural = 'Бонус-коды'
-

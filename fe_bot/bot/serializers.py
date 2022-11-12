@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import BotSettings
 
+
 class BotSettindsSerializer(serializers.Serializer):
     name = serializers.CharField()
     status = serializers.CharField()

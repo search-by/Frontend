@@ -1,16 +1,19 @@
-import requests
 from .models import Task
-from django.utils.html import mark_safe
 from django.contrib import admin
 from rangefilter.filters import DateRangeFilter
-import os
-
-SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
-TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
 
 
 class TaskAdmin(admin.ModelAdmin):
-    fields = ('user', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',  'file', 'logs',)
+    fields = ('UUID', 'chat_id', 'status')
+    readonly_fields = ('UUID',)
+    list_display = ('chat_id', 'status')
+    list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
+    ''' наработки страницы поиска НЕ УДАЛЯЬ 
+    SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
+    TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+    
+    fields = ('UUID', 'chat_id', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',  'file', 'logs',)
+    
     readonly_fields = ('user', 'last_update', 'pimeyes_status', 'type', 'result', 'creation_date', 'file', 'logs', 'user_lvl')
     list_display = ('last_update', 'user_id', 'pimeyes_status', 'status', 'result', 'user_lvl', )
     list_display_links = ('user_id', 'last_update', )
@@ -45,6 +48,6 @@ class TaskAdmin(admin.ModelAdmin):
                     UUID=obj.UUID
                 ))
     user_id.short_description = 'Пользователь'
-
+    '''
 
 admin.site.register(Task, TaskAdmin)

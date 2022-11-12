@@ -2,8 +2,12 @@ from django.contrib import admin
 from .models import BonusCode
 from django.utils.html import mark_safe
 
+#НЕ ИСПОЛЬЗУЕТСЯ
+
+
 class MyAdminSite(admin.AdminSite):
     site_header = '@fandydev2341bot админка'
+
 
 admin_site = MyAdminSite(name='myadmin')
 

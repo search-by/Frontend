@@ -1,5 +1,6 @@
 from users.models import User_new
 from bot.models import BotTexts, BotSettings
+from tasks.models import Task
 from telegram import Update
 from telegram.ext import Updater
 from telegram.ext import CallbackContext
@@ -47,10 +48,10 @@ class UserValidator:
             return True
 
     def is_day_limit(self):
-        self.user.all_searches = self.user.task_set.all().filter().annotate(c=Count('id'))
         currentDay = datetime.now().day
-        self.searches_today = self.user.all_searches.filter(creation_date__day=currentDay).annotate(c=Count('id'))
-        self.searches_left_today = self.user.level.free_day - self.searches_today.count()
+        self.searches_today = Task.objects.all().filter(start_time__day=currentDay,
+                                                                       chat_id=self.user.chat_id).annotate(c=Count('id'))
+        self.searches_left_today = self.user.level.free_day - len(self.searches_today)
         if self.searches_left_today <= 0:
             return True
 
