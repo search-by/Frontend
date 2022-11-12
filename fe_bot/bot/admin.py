@@ -3,7 +3,7 @@ from .models import BotSettings, userlevels, BotTexts
 from django.forms import TextInput
 from django.db import models
 
-
+'''
 class SettingsAdmin(admin.ModelAdmin):
     actions = None
     fields = ('default_locale', 'default_lvl', 'maitenance', 'raport_bot_key', "findclone_login",
@@ -27,7 +27,7 @@ class LevelAdmin(admin.ModelAdmin):
     list_display = ('name', "show_ads", "send_full_results", "group_requierd",
                     'free_day', 'pimeyes_results_count', "findclone_results_count",)
     list_display_links = ('name', )
-
+'''
 
 admin.site.register(BotTexts)
 admin.site.register(userlevels)

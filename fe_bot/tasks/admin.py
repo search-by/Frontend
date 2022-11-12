@@ -2,13 +2,13 @@ from .models import Task
 from django.contrib import admin
 from rangefilter.filters import DateRangeFilter
 
-
+'''
 class TaskAdmin(admin.ModelAdmin):
     fields = ('UUID', 'chat_id', 'status')
     readonly_fields = ('UUID',)
     list_display = ('chat_id', 'status')
     list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
-    ''' наработки страницы поиска НЕ УДАЛЯЬ 
+    наработки страницы поиска НЕ УДАЛЯЬ 
     SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
     TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
     

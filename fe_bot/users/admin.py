@@ -9,7 +9,7 @@ BOT_NAME = os.getenv("BOT_NAME", default="fandydev2341bot")
 TOKEN = os.getenv("TOKEN", default="1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", default="127.0.0.1")
 
-
+'''
 class LogsAdmin(admin.ModelAdmin):
     search_fields = ('chat_id',)
     list_display = ('date_added', 'chat_id', 'text',)
@@ -105,6 +105,9 @@ class UserNewAdmin(admin.ModelAdmin):
             obj.ref_code,
             obj.ref_code
         ))
+        
+        
+ '''
 admin.site.register(Logs)
 admin.site.register(User_new)
 #admin.site.register(Logs, LogsAdmin)
