@@ -29,6 +29,6 @@ class LevelAdmin(admin.ModelAdmin):
     list_display_links = ('name', )
 
 
-#admin.site.register(BotTexts, TextsAdmin)
-#admin.site.register(userlevels, LevelAdmin)
-#admin.site.register(BotSettings, SettingsAdmin)
+admin.site.register(BotTexts)
+admin.site.register(userlevels)
+admin.site.register(BotSettings)

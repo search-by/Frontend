@@ -105,7 +105,7 @@ class UserNewAdmin(admin.ModelAdmin):
             obj.ref_code,
             obj.ref_code
         ))
-
-
+admin.site.register(Logs)
+admin.site.register(User_new)
 #admin.site.register(Logs, LogsAdmin)
 #admin.site.register(User_new, UserNewAdmin)
