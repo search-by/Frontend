@@ -23,6 +23,6 @@ class BonusAdmin(admin.ModelAdmin):
     def referals(self, obj):
         return mark_safe(f'<a href="/admin/users/user_new/?ref_code={obj.bonus_code}"><p>Список пользователей</p></a>')
 
-admin.site.register(BonusCode, BonusAdmin)
+#admin.site.register(BonusCode, BonusAdmin)
 admin_site.register(BonusCode)
 

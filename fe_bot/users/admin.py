@@ -107,5 +107,5 @@ class UserNewAdmin(admin.ModelAdmin):
         ))
 
 
-admin.site.register(Logs, LogsAdmin)
-admin.site.register(User_new, UserNewAdmin)
+#admin.site.register(Logs, LogsAdmin)
+#admin.site.register(User_new, UserNewAdmin)

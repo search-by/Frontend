@@ -10,7 +10,7 @@ DEBUG = os.getenv("DEBUG", True)
 TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST", "db-postgresql-nyc1-09779-do-user-12834112-0.b.db.ondigitalocean.com")
-DB_NAME = os.getenv("DB_NAME", "fe_db")
+DB_NAME = os.getenv("DB_NAME", "db1")
 DB_USER = os.getenv("DB_USER", "doadmin")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_pKxTgdwJL6UxsEkYUEv")
 
@@ -71,7 +71,7 @@ DATABASES = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': DB_NAME,
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,

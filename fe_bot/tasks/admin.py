@@ -50,4 +50,4 @@ class TaskAdmin(admin.ModelAdmin):
     user_id.short_description = 'Пользователь'
     '''
 
-admin.site.register(Task, TaskAdmin)
+#admin.site.register(Task, TaskAdmin)
