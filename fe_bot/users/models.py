@@ -69,15 +69,15 @@ class CreateUpdateTracker(CreateTracker):
 class User_new(CreateUpdateTracker):
     chat_id = models.BigIntegerField(primary_key=True, unique=True)
     username = models.CharField(max_length=32, **nb)
-    first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256, **nb)
+    first_name = models.CharField(max_length=512)
+    last_name = models.CharField(max_length=512, **nb)
     language_code = models.CharField(max_length=8, help_text="Язык клиента взятый из профиля", **nb)
     ref_code = models.CharField(max_length=64, **nb)
     balance = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     level = models.ForeignKey(userlevels, on_delete=models.SET_NULL, default=1, null=True)
     extraSearches = models.BigIntegerField(default=0)
     reg_date = models.DateField(default=django.utils.timezone.now)
-    coment = models.CharField(max_length=512, blank=True)
+    coment = models.CharField(max_length=2512, blank=True)
 
     def is_bot_active(self) -> (Tuple[bool, DateField, Chat] or Tuple[bool, DateField, None]):
         bot = Updater(TOKEN)
@@ -378,7 +378,7 @@ class Logs(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     chat_id = models.BigIntegerField(default=0)
     user_name = models.CharField(max_length=150, default="-")
-    text = models.CharField(max_length=250, default="-")
+    text = models.CharField(max_length=2000, default="-")
 
     class Meta:
         verbose_name_plural = 'История'

@@ -7,7 +7,7 @@ alphanumeric = RegexValidator(regex='^[0-9a-zA-ZА-Яа-яёЁЇїІіЄєҐґ\'
 
 
 class BotTexts(models.Model):
-    message_code = models.CharField(max_length=25, default='0', help_text="Название переменной, отображается в коде", unique=True)
+    message_code = models.CharField(max_length=200, default='0', help_text="Название переменной, отображается в коде", unique=True)
     ua = models.CharField(max_length=1000, default='0', help_text="Сообщение для UA локали, до 1000 символов, работает форматирование из Telegram. ", validators=[alphanumeric])
     ru = models.CharField(max_length=1000, default='0', help_text="Коды Emoji тут: https://www.webfx.com/tools/emoji-cheat-sheet/", validators=[alphanumeric])
     en = models.CharField(max_length=1000, default='0', help_text="{new_line} - новая строка. {другой_текст} - системная переменная. Пока лучше не трогать", validators=[alphanumeric])
@@ -27,7 +27,7 @@ class BotTexts(models.Model):
 
 
 class userlevels(models.Model):
-    name = models.CharField(max_length=20, default="NEW", help_text="Название уровня(Отображается пользователю)")
+    name = models.CharField(max_length=200, default="NEW", help_text="Название уровня(Отображается пользователю)")
     free_day = models.PositiveSmallIntegerField(default=0, help_text="Макс. поисков можно использовать в день")
     pimeyes_results_count = models.PositiveSmallIntegerField(default=0,
                                                              help_text="Сколько присылать результатов PY. "
