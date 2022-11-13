@@ -13,7 +13,6 @@ from datetime import datetime
 from django.db.models import Count
 TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
 
-#TOKEN = '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w'  #КОСТЫЛЬ ИЗ ЗА НЕДАВНЕГО ПЕРЕЕЗДА
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 BOT_NAME = os.getenv("BOT_NAME", "search_by_face_bot")
 
