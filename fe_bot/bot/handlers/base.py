@@ -16,8 +16,6 @@ TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 BOT_NAME = os.getenv("BOT_NAME", "search_by_face_bot")
 
-# ДЕЛАЬ ЭОТ МОДУЛЬ БЫЛО БОЛЬШОЙ ОШИБКОЙ, МОЖНО УДАЛИТЬ ВСЕ
-
 
 class Message:
     def __init__(self, status, update=None, log=False, raport='0', context: CallbackContext = None, chat_id=None, var=None, user=None):

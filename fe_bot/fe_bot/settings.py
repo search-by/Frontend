@@ -6,7 +6,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'monkfish-app-44za3.ondigitalocean.app')
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
-DEBUG = os.getenv("DEBUG", True)
+DEBUG = os.getenv("DEBUG", False)
 TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST", "db-postgresql-nyc1-09779-do-user-12834112-0.b.db.ondigitalocean.com")
@@ -60,14 +60,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'fe_bot.wsgi.application'
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-'''
 
 DATABASES = {
     'default': {
