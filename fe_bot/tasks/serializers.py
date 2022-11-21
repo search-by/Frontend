@@ -7,6 +7,7 @@ class TaskSerializer(serializers.Serializer):
     status = serializers.CharField()
     source_adres = serializers.CharField()
     chat_id = serializers.IntegerField()
+    PY_max_results = serializers.IntegerField()
 
     def update(self, instance, validated_data):
         instance.status = validated_data.get("status", instance.status)
@@ -15,4 +16,4 @@ class TaskSerializer(serializers.Serializer):
 
     class Meta:
         model = Task
-        fields = ("source_adres", "chat_id", "status")
+        fields = ("source_adres", "chat_id", "status", "PY_max_results")
