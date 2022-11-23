@@ -8,6 +8,17 @@ from django.shortcuts import get_object_or_404
 import datetime
 
 
+class TaskWiewIp(APIView):
+    def get(self, request):
+        q = Task.objects.all().filter(status="INPROGRES")
+        query_serializer = TaskSerializer(q, many=True)
+        shuffle(query_serializer.data)
+        if len(query_serializer.data) > 0:
+            return Response(data=query_serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data=False, status=status.HTTP_201_CREATED)
+
+
 class TaskWiew(APIView):
     def get(self, request):
         q = Task.objects.all().filter(status="NEW")
