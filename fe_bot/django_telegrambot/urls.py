@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'admin/django-telegrambot/$', views.home, name='admin'),
     url(r'{}(?P<bot_token>.+?)/$'.format(webhook_base), views.webhook, name='webhook'),
     url(r'{}(?P<bot_token>.+?)/\d*$'.format(webhook_base), views.webhook, name='webhook'),
+    url(r'pay/$', views.pay, name='pay'),
 ]
 

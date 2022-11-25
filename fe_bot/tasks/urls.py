@@ -5,4 +5,5 @@ app_name = 'tasks'
 urlpatterns = [
     path('tasks/', TaskWiew.as_view()),
     path('tasks_ip/', TaskWiewIp.as_view()),
+
 ]

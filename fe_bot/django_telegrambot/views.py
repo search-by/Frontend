@@ -14,6 +14,10 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def pay(request):
+    return "Module for payments"
+
+
 @staff_member_required
 def home(request):
     bot_list = DjangoTelegramBot.bots
