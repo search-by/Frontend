@@ -2,7 +2,7 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django_telegrambot.apps import DjangoTelegramBot
 from django.views.decorators.csrf import csrf_exempt
 import sys
@@ -24,7 +24,7 @@ def home(request):
     bot_list = DjangoTelegramBot.bots
     print(bot_list)
     context = {'bot_list': bot_list, 'update_mode':settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
-    return render(request, 'django_telegrambot/index.html', context)
+    return HttpResponse("Pay here")
 
 @csrf_exempt
 def webhook (request, bot_token):
