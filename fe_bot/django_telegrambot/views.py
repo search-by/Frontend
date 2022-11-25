@@ -12,10 +12,11 @@ from telegram.error import (TelegramError, Unauthorized, BadRequest,
                             TimedOut, ChatMigrated, NetworkError)
 import logging
 logger = logging.getLogger(__name__)
+from rest_framework.response import Response
 
 
 def pay(request):
-    return "Module for payments"
+    return Response(data='Pay here')
 
 
 @staff_member_required
