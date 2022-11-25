@@ -1,14 +1,19 @@
+import os
+
+import requests
+from django.utils.safestring import mark_safe
+
 from .models import Task
 from django.contrib import admin
 from rangefilter.filters import DateRangeFilter
+TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
 
-'''
 class TaskAdmin(admin.ModelAdmin):
-    fields = ('UUID', 'chat_id', 'status')
-    readonly_fields = ('UUID',)
-    list_display = ('chat_id', 'status')
-    list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
-    наработки страницы поиска НЕ УДАЛЯЬ 
+    #fields = ('UUID', 'chat_id', 'status')
+    #readonly_fields = ('UUID',)
+    #list_display = ('chat_id', 'status')
+    #list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
+
     SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
     TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
     
@@ -48,7 +53,7 @@ class TaskAdmin(admin.ModelAdmin):
                     UUID=obj.UUID
                 ))
     user_id.short_description = 'Пользователь'
-    '''
 
-#admin.site.register(Task, TaskAdmin)
-admin.site.register(Task)
+
+admin.site.register(Task, TaskAdmin)
+#admin.site.register(Task)
