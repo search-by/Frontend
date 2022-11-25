@@ -16,7 +16,8 @@ from rest_framework.response import Response
 
 
 def pay(request):
-    pass
+    bot_list = DjangoTelegramBot.bots
+    print(bot_list)
     return HttpResponse("Pay here")
 
 
