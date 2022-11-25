@@ -16,7 +16,7 @@ from rest_framework.response import Response
 
 
 def pay(request):
-    return Response(data='Pay here')
+    return HttpResponse("Pay here")
 
 
 @staff_member_required
@@ -24,7 +24,7 @@ def home(request):
     bot_list = DjangoTelegramBot.bots
     print(bot_list)
     context = {'bot_list': bot_list, 'update_mode':settings.DJANGO_TELEGRAMBOT.get('MODE', 'WEBHOOK')}
-    return HttpResponse("Pay here")
+    return render(request, 'django_telegrambot/index.html', context)
 
 @csrf_exempt
 def webhook (request, bot_token):
