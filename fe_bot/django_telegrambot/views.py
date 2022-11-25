@@ -16,6 +16,7 @@ from rest_framework.response import Response
 
 
 def pay(request):
+    pass
     return HttpResponse("Pay here")
 
 
