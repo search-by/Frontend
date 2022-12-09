@@ -12,6 +12,8 @@ class Task(models.Model):
     ]
     STATUS = [
         ('NEW', 'NEW'),
+        ('QUERY', 'QUERY'),
+        ('DEBUG', 'DEBUG'),
         ('INPROGRES', 'INPROGRES'),
         ('CAPTCHA_UNEXPECTED_ERROR', 'CAPTCHA_UNEXPECTED_ERROR'),
         ('PDF_ERROR', 'PDF_ERROR'),
