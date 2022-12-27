@@ -32,6 +32,6 @@ def view_message_from_free_kassa(request):
                 message_text = getattr(BotTexts.objects.get(message_code='TEXT_SUCCESS_PAYMENT'), language_code)
                 message_text = message_text.format(amount=amount)
                 post_data = {"chat_id": user.chat_id, "text": message_text}
-                requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", json=json.dumps(post_data))
+                requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", data=post_data)
 
     return JsonResponse({"status": "ok"})
