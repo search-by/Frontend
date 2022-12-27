@@ -4,14 +4,20 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContex
 from django_telegrambot.apps import DjangoTelegramBot
 from bot.handlers import upload
 from bot.handlers.base import Message
+from freekassa import FreeKassaApi
+from .free_kassa_api import freekassa_client
 from bot.models import BotTexts, BotSettings
 from users.models import User_new
 from django.db.models import Q
 from bot.handlers.usercheck import UserValidator
 
-FIRST = range(1)
+from .models import TelegramPaymentLog
 
-#ГОВНОКОД, НУЖНО ПОДИЧСТИТЬ. ЗАТО РАБОТАЕТ
+FIRST = range(1)
+GET_AMOUNT_STATE = range(2)
+
+
+# ГОВНОКОД, НУЖНО ПОДИЧСТИТЬ. ЗАТО РАБОТАЕТ
 
 def check_ban_and_maitenence(user: User_new):
     if user.is_user_baned():
@@ -29,7 +35,7 @@ def start(update: Update, context: CallbackContext) -> None:
         Message(is_allowed, update=update, context=context).message_by_status()
     else:
         Message("/start", update=update, context=context, log=update.message.text).message_by_status()
-    #return FIRST
+    # return FIRST
 
 
 def anytext(update: Update, context: CallbackContext) -> None:
@@ -81,6 +87,41 @@ def profile(update: Update, context: CallbackContext) -> None:
     return FIRST
 
 
+""" Пополнить кошелек """
+
+
+def add_money_balance(update: Update, context: CallbackContext) -> iter:
+    u = UserValidator(update, context)
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+    else:
+        Message('MENU_TEXT_ADD_MONEY', update, log=update.message.text).add_money_balance(update, context)
+    return GET_AMOUNT_STATE
+
+
+def get_amount_to_add_balance(update: Update, context: CallbackContext) -> iter:
+    u = UserValidator(update, context)
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+    else:
+        try:
+            amount = float(update.message.text)
+            TelegramPaymentLog.objects.create(telegram_id=update.message.from_user.id, status="waiting", amount=amount)
+            payment_link = freekassa_client.create_sci(amount, update.message.from_user.id)
+            Message('MENU_TEXT_ASK_TO_PAY', update, log=update.message.text).ask_to_pay(payment_link=payment_link)
+            return FIRST
+
+        except ValueError:
+            return GET_AMOUNT_STATE
+
+
+
+
+""" End пополнить кошелек """
+
+
 def inline(update: Update, context: CallbackContext) -> None:
     u = UserValidator(update, context)
     is_allowed = check_ban_and_maitenence(u)
@@ -101,31 +142,24 @@ def inline(update: Update, context: CallbackContext) -> None:
 def main():
     dp = DjangoTelegramBot.dispatcher
     raw_texts = BotTexts.objects.all().filter(Q(message_code="BUTTON_MENU_PROFILE") | Q(message_code="BUTTON_HOME"))
-
-    conv_handler = ConversationHandler(
-        per_message=False,
-        entry_points=[CommandHandler('start', start),
+    default_points = [CommandHandler('start', start),
                       CommandHandler('profile', profile),
                       MessageHandler(Filters.photo, foto_upload),
                       MessageHandler(Filters.regex('^.*Профіль$|^.*Профиль$|^.*Profile$'), profile),
+                      MessageHandler(Filters.regex('^.*Пополнить баланс$|^.*Пополнить баланс$|^.*Пополнить баланс$'),
+                                     add_money_balance),
                       MessageHandler(Filters.regex('^.*Додому$|^.*Домой$|^.*Home$'), start),
                       MessageHandler(Filters.regex('^.*$'), anytext),
                       MessageHandler(Filters.photo, foto_upload),
                       CallbackQueryHandler(inline, pass_update_queue=False, pass_chat_data=True,
                                            pass_job_queue=False, pass_user_data=True, run_async=False
-                                           ),
-                      ],
+                                           )]
+    conv_handler = ConversationHandler(
+        per_message=False,
+        entry_points=[*default_points],
         states={
-            FIRST: [CommandHandler('start', start),
-                    CommandHandler('profile', profile),
-                    MessageHandler(Filters.regex('^.*Профіль$|^.*Профиль$|^.*Profile$'), profile),
-                    MessageHandler(Filters.regex('^.*Додому$|^.*Домой$|^.*Home$'), start),
-                    MessageHandler(Filters.regex('^.*$'), anytext),
-                    MessageHandler(Filters.photo, foto_upload),
-                    CallbackQueryHandler(inline, pass_update_queue=True, pass_chat_data=True,
-                                         pass_job_queue=False, pass_user_data=True, run_async=False
-                                        ),
-                    ],
+            FIRST: [*default_points],
+            GET_AMOUNT_STATE: [MessageHandler(Filters.text, get_amount_to_add_balance), *default_points],
         },
         fallbacks=[CommandHandler('cancel', start)],
     )

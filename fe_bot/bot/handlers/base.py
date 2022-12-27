@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os, telegram
 from telegram.ext import Updater
-from telegram import Update, ReplyKeyboardMarkup
+from telegram import Update, ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import CallbackContext
 from users.models import User_new, Logs
 from tasks.models import Task
@@ -11,14 +11,16 @@ from bot.models import BotTexts, BotSettings
 from telegram import KeyboardButton
 from datetime import datetime
 from django.db.models import Count
-TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
+
+TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 BOT_NAME = os.getenv("BOT_NAME", "search_by_face_bot")
 
 
 class Message:
-    def __init__(self, status, update=None, log=False, raport='0', context: CallbackContext = None, chat_id=None, var=None, user=None):
+    def __init__(self, status, update=None, log=False, raport='0', context: CallbackContext = None, chat_id=None,
+                 var=None, user=None):
         self.locale = BotSettings.objects.get(pk=1).default_locale
         self.bot = Updater(TOKEN)
         self.status = status
@@ -26,27 +28,37 @@ class Message:
         self.BOT_NAME = BOT_NAME.replace('_', '\_')
         self.texts = {}
         self.raw_texts = BotTexts.objects.all().filter(message_code=self.status)
+        print(self.status)
         self.chat_id = update.message.chat.id
         self.menu_text_profile = BotTexts.objects.all().filter(message_code='MENU_TEXT_PROFILE')
         self.menu_text_home = BotTexts.objects.all().filter(message_code='BUTTON_HOME')
-        input_field_placeholder = emoji.emojize(self.insert_vars(BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale)),
-                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=", "\=").replace("'", "\'").replace("_", "\_")
+        input_field_placeholder = emoji.emojize(
+            self.insert_vars(BotTexts.objects.all().filter(message_code='INLINE_tip')[0].txt(self.locale)),
+            use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=", "\=").replace("'", "\'").replace("_",
+                                                                                                                  "\_")
 
         for big_item in self.raw_texts:
             cleaned_text = emoji.emojize(self.insert_vars(big_item.txt(self.locale)),
-                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=", "\=").replace("'", "\'").replace("_", "\_")
+                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=",
+                                                                                                         "\=").replace(
+                "'", "\'").replace("_", "\_")
             cleaned_logs = emoji.emojize(self.insert_vars(big_item.log_text),
-                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=","\=").replace("'", "\'").replace("_", "\_")
+                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=",
+                                                                                                         "\=").replace(
+                "'", "\'").replace("_", "\_")
             cleaned_raports = emoji.emojize(self.insert_vars(big_item.raport_text),
-                                         use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=","\=").replace("'", "\'").replace("_", "\_")
-            self.texts[big_item.message_code] = {'text' : cleaned_text,
-                     'log_text' : cleaned_logs,
-                     'raport_text' : cleaned_raports}
-
+                                            use_aliases=True).replace(".", "\.").replace("-", "\-").replace("=",
+                                                                                                            "\=").replace(
+                "'", "\'").replace("_", "\_")
+            self.texts[big_item.message_code] = {'text': cleaned_text,
+                                                 'log_text': cleaned_logs,
+                                                 'raport_text': cleaned_raports}
+        print(self.texts)
         reply_keyboard_first = [
             [KeyboardButton('Домой'),
-             KeyboardButton('Профиль')
-             ]]
+             KeyboardButton('Профиль')],
+            [KeyboardButton('Пополнить баланс')]
+        ]
         self.reply_markup = ReplyKeyboardMarkup(reply_keyboard_first,
                                                 resize_keyboard=True,
                                                 input_field_placeholder=input_field_placeholder
@@ -62,17 +74,17 @@ class Message:
         if self.searches_left_today <= 0:
             self.searches_left_today = '0'
         new_text = text.format(chat_id=self.chat_id,
-                         level=self.user.level,
-                         group=self.user.level.group_name,
-                         ref_link="1",#f"https://t.me/{BOT_NAME}?start={self.user.chat_id}",
-                         #ref_count=self.user["total_refs"],
-                         balance='0',#str(self.user.balance),
-                         searches_left_today=str(self.searches_left_today),
-                         extra_searches=self.user.extraSearches,
-                         new_line='\n',
-                         #time_till_new_search=self.var,
-                         #group=self.group,
-                         time="1",#datetime.datetime.now().strftime("%d/%m/%y %H:%M")
+                               level=self.user.level,
+                               group=self.user.level.group_name,
+                               ref_link="1",  # f"https://t.me/{BOT_NAME}?start={self.user.chat_id}",
+                               # ref_count=self.user["total_refs"],
+                               balance=str(self.user.balance),
+                               searches_left_today=str(self.searches_left_today),
+                               extra_searches=self.user.extraSearches,
+                               new_line='\n',
+                               # time_till_new_search=self.var,
+                               # group=self.group,
+                               time="1",  # datetime.datetime.now().strftime("%d/%m/%y %H:%M")
                                )
         return new_text
 
@@ -109,15 +121,27 @@ class Message:
                                   parse_mode=PARSE_MODE,
                                   reply_markup=self.reply_markup
                                   )
-        
+
     def profile(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
                                   parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
 
+    """ Пополнить баланс """
+    def add_money_balance(self, update: Update, context: CallbackContext) -> None:
+        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
+                                  parse_mode=PARSE_MODE, reply_markup=None)
+
+    def ask_to_pay(self, payment_link) -> None:
+        reply_markup = InlineKeyboardMarkup(
+            [[InlineKeyboardButton(text="Оплатить", url=payment_link)]]
+        )
+        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
+                                  parse_mode=PARSE_MODE, reply_markup=reply_markup)
+    """ End пополнить баланс """
+
     def inline(self) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,
                                   disable_web_page_preview=True)
-
 
     def start(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'], parse_mode=PARSE_MODE,

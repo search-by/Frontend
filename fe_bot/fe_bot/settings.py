@@ -4,15 +4,24 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'monkfish-app-44za3.ondigitalocean.app')
+# SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'monkfish-app-44za3.ondigitalocean.app')
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'afraid-dodos-warn-109-229-30-154.loca.lt')
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
-DEBUG = os.getenv("DEBUG", False)
-TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
+DEBUG = os.getenv("DEBUG", True)
+TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 DB_HOST = os.getenv("DB_HOST", "db-postgresql-nyc1-09779-do-user-12834112-0.b.db.ondigitalocean.com")
 DB_NAME = os.getenv("DB_NAME", "db3")
 DB_USER = os.getenv("DB_USER", "doadmin")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "AVNS_pKxTgdwJL6UxsEkYUEv")
+
+# Free-kassa
+FREEKASSA_API_KEY = "70a3ef6d2e4ee9bca91a0e117fe4683e"
+FREEKASSA_FIRST_SECRET_KEY = "m]K**RsE2RPdl9D"
+FREEKASSA_SECOND_SECRET_KEY = "JE}-@Nk3dK2d%Vt"
+FREEKASSA_MERCHANT_ID = 25371
+FREEKASSA_WALLET_ID = "6"
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -102,6 +111,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJANGO_TELEGRAMBOT = {
     'MODE': 'WEBHOOK',
+    # 'MODE': 'POLLING',
     'WEBHOOK_SITE': f'https://{SERVER_ADRESS}',
     'WEBHOOK_PREFIX': '/prefix',
     'BOTS': [

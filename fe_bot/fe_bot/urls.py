@@ -9,4 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url('api/v1/tasks/', include('tasks.urls')),
     url('api/v1/', include('users.urls')),
+    url('api/v1/', include('users.urls')),
+    url('free_kassa/', include('bot.urls')),
 ]

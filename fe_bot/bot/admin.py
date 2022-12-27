@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import BotSettings, userlevels, BotTexts
-from django.forms import TextInput
-from django.db import models
+
+from .models import BotSettings, userlevels, BotTexts, TelegramPaymentLog
 
 '''
 class SettingsAdmin(admin.ModelAdmin):
@@ -32,3 +31,4 @@ class LevelAdmin(admin.ModelAdmin):
 admin.site.register(BotTexts)
 admin.site.register(userlevels)
 admin.site.register(BotSettings)
+admin.site.register(TelegramPaymentLog)

@@ -6,7 +6,7 @@ from tasks.models import Task
 import os
 
 BOT_NAME = os.getenv("BOT_NAME", default="fandydev2341bot")
-TOKEN = os.getenv("TOKEN", default="1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
+TOKEN = os.getenv("TOKEN", default="1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ")
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", default="127.0.0.1")
 
 '''
@@ -109,6 +109,12 @@ class UserNewAdmin(admin.ModelAdmin):
         
  '''
 admin.site.register(Logs)
-admin.site.register(User_new)
-#admin.site.register(Logs, LogsAdmin)
-#admin.site.register(User_new, UserNewAdmin)
+
+
+@admin.register(User_new)
+class CustomAdmin(admin.ModelAdmin):
+    list_display = ("chat_id",)
+    search_fields = ('chat_id',)
+
+# admin.site.register(Logs, LogsAdmin)
+# admin.site.register(User_new, UserNewAdmin)

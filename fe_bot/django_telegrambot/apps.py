@@ -61,6 +61,7 @@ class DjangoTelegramBot(AppConfig):
         else:
             try:
                 index = cls.bot_tokens.index(bot_id)
+                print(index)
             except ValueError:
                 if not safe:
                     return None

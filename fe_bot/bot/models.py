@@ -26,6 +26,25 @@ class BotTexts(models.Model):
         verbose_name_plural = 'Текста бота'
 
 
+class TelegramPaymentLog(models.Model):
+    telegram_id = models.CharField("Telegram id", max_length=255)
+    amount = models.FloatField("Сумма", default=0)
+
+    STATUS_CHOICES = (
+        ("waiting", "В ожидании оплаты"),
+        ("payed", "Оплачено"),
+    )
+    status = models.CharField("Статус", choices=STATUS_CHOICES, default="waiting", max_length=15)
+    created = models.DateTimeField("Дата создания", auto_now_add=True)
+
+    def __str__(self):
+        return f"Платеж №{self.id} от пользователя {self.telegram_id}"
+
+    class Meta:
+        verbose_name = 'Логи оплат'
+        verbose_name_plural = verbose_name
+
+
 class userlevels(models.Model):
     name = models.CharField(max_length=200, default="NEW", help_text="Название уровня(Отображается пользователю)")
     free_day = models.PositiveSmallIntegerField(default=0, help_text="Макс. поисков можно использовать в день")

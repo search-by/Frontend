@@ -6,23 +6,29 @@ from django.utils.safestring import mark_safe
 from .models import Task
 from django.contrib import admin
 from rangefilter.filters import DateRangeFilter
-TOKEN = os.getenv("TOKEN", '1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM')
+
+TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')
+
 
 class TaskAdmin(admin.ModelAdmin):
-    #fields = ('UUID', 'chat_id', 'status')
-    #readonly_fields = ('UUID',)
-    #list_display = ('chat_id', 'status')
-    #list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
+    # fields = ('UUID', 'chat_id', 'status')
+    # readonly_fields = ('UUID',)
+    # list_display = ('chat_id', 'status')
+    # list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
 
     SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
-    TOKEN = os.getenv("TOKEN", "1950319109:AAGUgUsCQ-5fvHASYkQsweg5atGNw4QzXRM")
-    
-    fields = ('UUID', 'chat_id', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',  'file', 'logs',)
-    
-    readonly_fields = ('user', 'last_update', 'pimeyes_status', 'type', 'result', 'creation_date', 'file', 'logs', 'user_lvl')
-    list_display = ('last_update', 'user_id', 'pimeyes_status', 'status', 'result', 'user_lvl', )
-    list_display_links = ('user_id', 'last_update', )
-    list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl', )
+    TOKEN = os.getenv("TOKEN", "1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ")
+
+    fields = (
+        'UUID', 'chat_id', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',
+        'file',
+        'logs',)
+
+    # readonly_fields = (
+    #     'user', 'last_update', 'pimeyes_status', 'type', 'result', 'creation_date', 'file', 'logs', 'user_lvl')
+    list_display = ('id', 'user_id', 'status',)
+    list_display_links = ('id', 'user_id',)
+    # list_filter = ('status', ('creation_date', DateRangeFilter), 'pimeyes_status', 'user_lvl',)
 
     @admin.display
     def user_id(self, obj):
@@ -52,8 +58,9 @@ class TaskAdmin(admin.ModelAdmin):
                     e=e,
                     UUID=obj.UUID
                 ))
+
     user_id.short_description = 'Пользователь'
 
 
 admin.site.register(Task, TaskAdmin)
-#admin.site.register(Task)
+# admin.site.register(Task)
