@@ -6,9 +6,7 @@ from django.http import JsonResponse
 from users.models import User_new
 from fe_bot.settings import TOKEN
 
-from bot.models import BotTexts
-
-from fe_bot.bot.models import TelegramPaymentLog
+from bot.models import BotTexts, TelegramPaymentLog
 
 
 def view_message_from_free_kassa(request):
