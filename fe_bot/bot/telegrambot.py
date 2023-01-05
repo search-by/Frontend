@@ -1,16 +1,15 @@
+from bot.handlers import upload
+from bot.handlers.base import Message
+from bot.handlers.usercheck import UserValidator
+from bot.models import BotTexts
+from django.db.models import Q
+from django_telegrambot.apps import DjangoTelegramBot
 from telegram import Update
 from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler, \
     CallbackQueryHandler
-from django_telegrambot.apps import DjangoTelegramBot
-from bot.handlers import upload
-from bot.handlers.base import Message
-from freekassa import FreeKassaApi
-from .free_kassa_api import freekassa_client
-from bot.models import BotTexts, BotSettings
 from users.models import User_new
-from django.db.models import Q
-from bot.handlers.usercheck import UserValidator
 
+from .free_kassa_api import freekassa_client
 from .models import TelegramPaymentLog
 
 FIRST = range(1)
