@@ -23,7 +23,7 @@ def pay(request):
     return HttpResponse("Pay here")
 
 
-@staff_member_required
+# @staff_member_required
 def home(request):
     bot_list = DjangoTelegramBot.bots
     print(bot_list)
