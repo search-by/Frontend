@@ -12,7 +12,7 @@ from telegram import KeyboardButton
 from datetime import datetime
 from django.db.models import Count
 
-TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')
+TOKEN = os.getenv("TOKEN", '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w')
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 BOT_NAME = os.getenv("BOT_NAME", "search_by_face_bot")

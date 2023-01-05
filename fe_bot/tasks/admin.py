@@ -7,7 +7,7 @@ from .models import Task
 from django.contrib import admin
 from rangefilter.filters import DateRangeFilter
 
-TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')
+TOKEN = os.getenv("TOKEN", '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w')
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class TaskAdmin(admin.ModelAdmin):
     # list_filter = ('status', ('start_time', DateRangeFilter), 'backend_key', 'chat_id',)
 
     SERVER_ADRESS = os.getenv("SERVER_ADRESS", "127.0.0.1")
-    TOKEN = os.getenv("TOKEN", "1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ")
+    TOKEN = os.getenv("TOKEN", "5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w")
 
     fields = (
         'UUID', 'chat_id', 'status', 'pimeyes_status', 'last_update', 'user_lvl', 'result', 'type', 'creation_date',

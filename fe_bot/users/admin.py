@@ -6,7 +6,7 @@ from tasks.models import Task
 import os
 
 BOT_NAME = os.getenv("BOT_NAME", default="fandydev2341bot")
-TOKEN = os.getenv("TOKEN", default="1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ")
+TOKEN = os.getenv("TOKEN", default="5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w")
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", default="127.0.0.1")
 
 '''
