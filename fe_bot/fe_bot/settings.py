@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'monkfish-app-44za3.ondigitalocean.app')
-SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'afraid-dodos-warn-109-229-30-154.loca.lt')
+SERVER_ADRESS = os.getenv("SERVER_ADRESS", 'sbfb.store')
 SECRET_KEY = os.getenv("SECRET_KEY", 'django-insecure-b5mww^d-9!5k+9i8%2s0vzyh54eqgr#k9810*(^w$vid0^d*t0')
 DEBUG = os.getenv("DEBUG", True)
 TOKEN = os.getenv("TOKEN", '1801011478:AAF2Z_vmLNUhP2ZIhE6X7Gv6U3SjTvXL9hQ')

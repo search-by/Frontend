@@ -100,6 +100,8 @@ def add_money_balance(update: Update, context: CallbackContext) -> iter:
     return GET_AMOUNT_STATE
 
 
+#
+
 def get_amount_to_add_balance(update: Update, context: CallbackContext) -> iter:
     u = UserValidator(update, context)
     is_allowed = check_ban_and_maitenence(u)
@@ -115,8 +117,6 @@ def get_amount_to_add_balance(update: Update, context: CallbackContext) -> iter:
 
         except ValueError:
             return GET_AMOUNT_STATE
-
-
 
 
 """ End пополнить кошелек """
