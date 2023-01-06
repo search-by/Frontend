@@ -4,9 +4,11 @@ from .models import Logs, User_new
 from rangefilter.filters import DateRangeFilter
 from tasks.models import Task
 import os
+from fe_bot.settings import TOKEN
+
 
 BOT_NAME = os.getenv("BOT_NAME", default="fandydev2341bot")
-TOKEN = os.getenv("TOKEN", default="5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w")
+# TOKEN = os.getenv("TOKEN", default="5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w")
 SERVER_ADRESS = os.getenv("SERVER_ADRESS", default="127.0.0.1")
 
 '''

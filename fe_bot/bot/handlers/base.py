@@ -12,7 +12,8 @@ from telegram import KeyboardButton
 from datetime import datetime
 from django.db.models import Count
 
-TOKEN = os.getenv("TOKEN", '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w')
+# TOKEN = os.getenv("TOKEN", '5190758492:AAGhyMN-1eDHp_WtndOaxtbnEGCaoc48e6w')
+from fe_bot.settings import TOKEN
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 BOT_NAME = os.getenv("BOT_NAME", "search_by_face_bot")
@@ -127,9 +128,17 @@ class Message:
                                   parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
 
     """ Пополнить баланс """
+    def ask_choose_currency(self, update: Update, context: CallbackContext) -> None:
+        reply_markup = ReplyKeyboardMarkup(
+            [[KeyboardButton(text="RUB"), KeyboardButton(text="UAH"), KeyboardButton(text="USD")],
+             [KeyboardButton('Домой')]], resize_keyboard=True, one_time_keyboard=True
+        )
+        self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
+                                  parse_mode=PARSE_MODE, reply_markup=reply_markup)
+
     def add_money_balance(self, update: Update, context: CallbackContext) -> None:
         self.bot.bot.send_message(self.chat_id, self.texts[self.status]['text'],
-                                  parse_mode=PARSE_MODE, reply_markup=None)
+                                  parse_mode=PARSE_MODE, reply_markup=self.reply_markup)
 
     def ask_to_pay(self, payment_link) -> None:
         reply_markup = InlineKeyboardMarkup(

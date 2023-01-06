@@ -48,7 +48,7 @@ class FreeKassaApi:
     def create_sci(self, oa: float, o: str, currency: str = "RUB"):
 
         params = {"m": self.merchant_id, "oa": oa, "o": o, "currency": currency,
-                  "s": self.create_sci_signature(o, oa, currency)}
+                  "s": self.create_sci_signature(o, oa, currency), "us_CURRENCY": currency}
         return self.BASE_URL_SCI + "?" + urllib.parse.urlencode(params)
 
 

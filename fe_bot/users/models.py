@@ -16,8 +16,8 @@ from telegram.ext import Updater
 from telegram import Chat
 import telegram
 import requests
-
-TOKEN = os.getenv("TOKEN")
+from fe_bot.settings import TOKEN
+# TOKEN = os.getenv("TOKEN")
 
 PARSE_MODE = os.getenv("PARSE_MODE", "MarkdownV2")
 LOCALE = os.getenv("LOCALE", "ua")

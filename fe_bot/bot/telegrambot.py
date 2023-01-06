@@ -13,7 +13,9 @@ from .free_kassa_api import freekassa_client
 from .models import TelegramPaymentLog
 
 FIRST = range(1)
-GET_AMOUNT_STATE = range(2)
+
+GET_CURRENCY_STATE = range(2)
+GET_AMOUNT_STATE = range(3)
 
 
 # ГОВНОКОД, НУЖНО ПОДИЧСТИТЬ. ЗАТО РАБОТАЕТ
@@ -95,11 +97,21 @@ def add_money_balance(update: Update, context: CallbackContext) -> iter:
     if is_allowed:
         Message(is_allowed, update=update, context=context).message_by_status()
     else:
-        Message('MENU_TEXT_ADD_MONEY', update, log=update.message.text).add_money_balance(update, context)
-    return GET_AMOUNT_STATE
+        Message('MENU_TEXT_ASK_CHOOSE_CURRENCY', update, log=update.message.text).ask_choose_currency(update, context)
+    return GET_CURRENCY_STATE
 
 
 #
+def get_currency_to_add_balance(update: Update, context: CallbackContext) -> iter:
+    u = UserValidator(update, context)
+    is_allowed = check_ban_and_maitenence(u)
+    if is_allowed:
+        Message(is_allowed, update=update, context=context).message_by_status()
+    else:
+        TelegramPaymentLog.objects.create(telegram_id=update.message.from_user.id, status="waiting", currency=update.message.text, amount=0)
+        Message('MENU_TEXT_ADD_MONEY', update, log=update.message.text).add_money_balance(update, context)
+    return GET_AMOUNT_STATE
+
 
 def get_amount_to_add_balance(update: Update, context: CallbackContext) -> iter:
     u = UserValidator(update, context)
@@ -109,8 +121,11 @@ def get_amount_to_add_balance(update: Update, context: CallbackContext) -> iter:
     else:
         try:
             amount = float(update.message.text)
-            TelegramPaymentLog.objects.create(telegram_id=update.message.from_user.id, status="waiting", amount=amount)
-            payment_link = freekassa_client.create_sci(amount, update.message.from_user.id)
+            tg_payment_log = TelegramPaymentLog.objects.filter(telegram_id=update.message.from_user.id, status="waiting").last()
+            tg_payment_log.amount = amount
+            tg_payment_log.save()
+
+            payment_link = freekassa_client.create_sci(amount, update.message.from_user.id, currency=tg_payment_log.currency)
             Message('MENU_TEXT_ASK_TO_PAY', update, log=update.message.text).ask_to_pay(payment_link=payment_link)
             return FIRST
 
@@ -140,7 +155,7 @@ def inline(update: Update, context: CallbackContext) -> None:
 
 def main():
     dp = DjangoTelegramBot.dispatcher
-    raw_texts = BotTexts.objects.all().filter(Q(message_code="BUTTON_MENU_PROFILE") | Q(message_code="BUTTON_HOME"))
+    # raw_texts = BotTexts.objects.all().filter(Q(message_code="BUTTON_MENU_PROFILE") | Q(message_code="BUTTON_HOME"))
     default_points = [CommandHandler('start', start),
                       CommandHandler('profile', profile),
                       MessageHandler(Filters.photo, foto_upload),
@@ -158,7 +173,8 @@ def main():
         entry_points=[*default_points],
         states={
             FIRST: [*default_points],
-            GET_AMOUNT_STATE: [MessageHandler(Filters.text, get_amount_to_add_balance), *default_points],
+            GET_CURRENCY_STATE: [MessageHandler(Filters.regex(r"^.*UAH$|^.*RUB$|^.*USD$"), get_currency_to_add_balance), *default_points],
+            GET_AMOUNT_STATE: [MessageHandler(Filters.regex(r"^\d+$"), get_amount_to_add_balance), *default_points],
         },
         fallbacks=[CommandHandler('cancel', start)],
     )

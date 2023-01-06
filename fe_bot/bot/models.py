@@ -29,6 +29,7 @@ class BotTexts(models.Model):
 class TelegramPaymentLog(models.Model):
     telegram_id = models.CharField("Telegram id", max_length=255)
     amount = models.FloatField("Сумма", default=0)
+    currency = models.CharField("Валюта", max_length=255)
 
     STATUS_CHOICES = (
         ("waiting", "В ожидании оплаты"),
